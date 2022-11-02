@@ -64,7 +64,7 @@ class GiveCardCard{}
 
 class RecieveOrPayCard{}
 
-class GetOutOfJailFreeCard{}
+class GetOutOfJailCard{}
 
 class DiceCup{
 DiceValue
@@ -80,7 +80,7 @@ class ChanceField{}
 
 class GoToJailField{}
 
-class ParkingFreeField{}
+class ParkingField{}
 
 class BuyableField{}
 
@@ -97,12 +97,12 @@ Field "1" <|-- "1" JailField : isA
 Field "1" <|-- "1" StartField : isA
 Field "1" <|-- "1" ChanceField : isA
 Field "1" <|-- "1" GoToJailField : isA
-Field "1" <|-- "1" ParkingFreeField : isA
+Field "1" <|-- "1" ParkingField : isA
 Field "1" <|-- "1" BuyableField : isA
-ChanceCard "20" <|-- "4" moveCard : isA
-ChanceCard "20" <|-- "8" freeFieldCard : isA
+ChanceCard "20" <|-- "4" MoveCard : isA
+ChanceCard "20" <|-- "8" FreeFieldCard : isA
 ChanceCard "20" <|-- "4" GiveCardCard : isA
 ChanceCard "20" <|-- "3" RecieveOrPayCard : isA
-ChanceCard "20" <|-- "1" GetOutOfJailFreeCard : isA
+ChanceCard "20" <|-- "1" GetOutOfJailCard : isA
 
 @enduml
