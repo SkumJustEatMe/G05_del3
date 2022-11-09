@@ -1,16 +1,17 @@
 package Game;
-public class MoveCard extends ChanceCard{
+
+public class MoveToCard {
     String text;
-    int amount;
-    MoveCard(String text, int value){
+    int value;
+    public MoveToCard(String text, int value){
         this.text = text;
-        this.amount = amount;
+        this.value = value;
     }
 
     public void execute(Player p){
         int spot;
         p.curSqr = spot;
-        p.curSqr() = p.curSqr() + p.move(amount);
+        p.curSqr = p.setLoc(value);
         if(spot > p.curSqr){
             p.changeBalance(200);
         }
