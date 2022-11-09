@@ -47,6 +47,6 @@ public class Deck {
         this.cards[] = new GetOutOfJailCard("Du løslades uden omkostninger. Behold dette kort, indtil du får brug for det.");
         this.cards[] = new RecieveOrPayCard("Du har spist for meget slik. BETAL M2 til banken.", -2);
         this.cards[] = new RecieveOrPayCard("Du har labet alle dine lektier! MODTAG M2 fra banken.", 2);
-        this.cards[] = new RecieveOrPayCard("Det er din fødselsdag! Alle giver dig M1.\n TILLYKKE MED FØDSELSDAGEN!", 1);
+        this.cards[] = new BirthdayCard("Det er din fødselsdag! Alle giver dig M1.\n TILLYKKE MED FØDSELSDAGEN!", 1);
     }
 }

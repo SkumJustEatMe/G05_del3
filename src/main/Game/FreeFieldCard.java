@@ -10,7 +10,6 @@ public class FreeFieldCard extends ChanceCard{
     public void execute(Player p){
         int spot;
         p.curSqr = spot;
-
         if (p.curSqr == value || p.curSqr == value2||p.curSqr == value3){
             p.curSqr +=  1;
         }else if(p.curSqr > value && p.curSqr < value2){
@@ -20,8 +19,15 @@ public class FreeFieldCard extends ChanceCard{
         } else {
         p.curSqr = value;
         }
-        if(spot > p.curSqr){
+        if(spot > p.curSqr()){
             p.changeBalance(200);
+        }
+        if(p.curSqr.owner() = null){
+            p.curSqr.owner() = p.curPlayer();
+        }
+        else{
+            p.changeBalance(-p.curSqr.rent());
+            p.curSqr.owner.changeBalance(p.curSqr.rent());
         }
     }
     public String printText(){

@@ -1,11 +1,13 @@
 package Game;
 public class RecieveOrPayCard extends ChanceCard{
-    private String text;
-    private int amount;
+    protected String text;
+    protected int amount;
     RecieveOrPayCard(String text, int amount){
         this.text = text;
         this.amount = amount;
     }
+
+
     public void execute(Player p){
        p.changeBalance(amount);
     }
