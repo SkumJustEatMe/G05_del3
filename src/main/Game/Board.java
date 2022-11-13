@@ -6,7 +6,7 @@ public class Board {
         switch (roll) {
 
             case 1:
-                name = "Starting field";
+                name = "Start";
                 break;
             case 2:
                 name = "Corner Kitchen Burgerbar ";
@@ -42,7 +42,7 @@ public class Board {
                 name = "Swimming pool";
                 break;
             case 13:
-                name = "Free parking spot";
+                name = "Park";
                 break;
             case 14:
                 name = "Playing hall";
