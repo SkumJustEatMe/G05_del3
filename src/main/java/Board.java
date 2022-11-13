@@ -24,7 +24,7 @@ public class Board {
                 name = "Icecream store";
                 break;
             case 7:
-                name = "Prison visit";
+                name = "Prison";
                 break;
             case 8:
                 name = "Museum";
@@ -167,7 +167,7 @@ public class Board {
     }
 
     public static int getRentPrice(int roll) {
-        int rent = null;
+        int rent = 0;
         switch (roll) {
 
             case 1:
@@ -256,7 +256,7 @@ public class Board {
     }
 
     public static int getFieldPrice (int roll) {
-        int price = null;
+        int price = 0;
         switch (roll) {
 
             case 1:
