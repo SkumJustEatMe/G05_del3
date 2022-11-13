@@ -260,81 +260,82 @@ public class Board {
         switch (roll) {
 
             case 1:
-
+                price = 0;
                 break;
             case 2:
-
+                price = 50;
                 break;
             case 3:
-
+                price = 50;
                 break;
             case 4:
-
+                price = 0;
                 break;
             case 5:
-
+                price = 60;
                 break;
             case 6:
-
+                price = 60;
                 break;
             case 7:
-
+                price = 0;
                 break;
             case 8:
-
+                price = 70;
                 break;
             case 9:
-
+                price = 70;
                 break;
             case 10:
-
+                price = 0;
                 break;
             case 11:
-
+                price = 80;
                 break;
             case 12:
-
+                price = 80;
                 break;
             case 13:
-
+                price = 0
                 break;
             case 14:
-
+                price = 90;
                 break;
             case 15:
-
+                price = 90;
                 break;
             case 16:
-
+                price = 0;
                 break;
             case 17:
-
+                price = 100;
                 break;
             case 18:
-
+                price = 100;
                 break;
             case 19:
-
+                price = 0;
                 break;
             case 20:
-
+                price = 110;
                 break;
             case 21:
-
+                price = 110;
                 break;
             case 22:
-
+                price = 0;
                 break;
             case 23:
-
+                price = 120;
                 break;
             case 24:
-
+                price 120;
                 break;
 
 
 
         }
+        return price;
 
     }
 
