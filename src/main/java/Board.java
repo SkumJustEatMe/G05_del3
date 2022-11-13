@@ -12,7 +12,7 @@ public class Board {
                 name = "Corner Kitchen Burgerbar ";
                 break;
             case 3:
-                name = "Pizza House;
+                name = "Pizza House";
                 break;
             case 4:
                 name = "Chance card";
@@ -85,7 +85,8 @@ public class Board {
     }
     public static String getFieldDescription(int roll) {
         String descriptoion = null;
-        Switch (roll) {
+        switch (roll) {
+
             case 1:
                 descriptoion = "Starting field";
                 break;
@@ -93,7 +94,7 @@ public class Board {
                 descriptoion = "Corner Kitchen Burgerbar ";
                 break;
             case 3:
-                descriptoion = "Pizza House;
+                descriptoion = "Pizza House";
                 break;
             case 4:
                 descriptoion = "Chance card";
@@ -129,37 +130,47 @@ public class Board {
                 descriptoion = "Playing hall";
                 break;
             case 15:
-                name = "Cinema";
+                descriptoion = "Cinema";
                 break;
             case 16:
-                name = "Chance card";
+                descriptoion = "Chance card";
                 break;
             case 17:
-                name = "Toy store";
+                descriptoion = "Toy store";
                 break;
             case 18:
-                name = "Pet store";
+                descriptoion = "Pet store";
                 break;
             case 19:
-                name = "Go to jail";
+                descriptoion = "Go to jail";
                 break;
             case 20:
-                name = "Bowling allay";
+                descriptoion = "Bowling allay";
                 break;
             case 21:
-                name = "Zoo";
+                descriptoion = "Zoo";
                 break;
             case 22:
-                name = "Chance card";
+                descriptoion = "Chance card";
                 break;
             case 23:
-                name = "Waterpark";
+                descriptoion = "Waterpark";
                 break;
             case 24:
-                name = "The beach promenade";
+                descriptoion = "The beach promenade";
                 break;
 
         }
+        return descriptoion
+
+
+    }
+
+    public static int getRentPrice(int roll) {
+
+        
+
+
     }
 
 
