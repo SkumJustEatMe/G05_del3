@@ -167,8 +167,90 @@ public class Board {
     }
 
     public static int getRentPrice(int roll) {
+        int rent = null;
+        switch (roll) {
 
-        
+            case 1:
+                rent = 0 ;
+                break;
+            case 2:
+                rent = 10 ;
+                break;
+            case 3:
+                rent = 10 ;
+                break;
+            case 4:
+                rent = 0 ;
+                break;
+            case 5:
+                rent = 20 ;
+                break;
+            case 6:
+                rent = 20 ;
+                break;
+            case 7:
+                rent = 0 ;
+                break;
+            case 8:
+                rent = 30;
+                break;
+            case 9:
+                rent = 30;
+                break;
+            case 10:
+                rent = 0 ;
+                break;
+            case 11:
+                rent = 40;
+                break;
+            case 12:
+                rent = 40;
+                break;
+            case 13:
+                rent = 0;
+                break;
+            case 14:
+                rent = 50;
+                break;
+            case 15:
+                rent = 50;
+                break;
+            case 16:
+                rent = 0;
+                break;
+            case 17:
+                rent = 60;
+                break;
+            case 18:
+                rent = 60;
+                break;
+            case 19:
+                rent = 0;
+                break;
+            case 20:
+                rent = 70;
+                break;
+            case 21:
+                rent = 70;
+                break;
+            case 22:
+                rent = 0;
+                break;
+            case 23:
+                rent = 80;
+                break;
+            case 24:
+                rent = 80;
+                break;
+
+
+        }
+        return rent
+
+
+
+
+
 
 
     }
