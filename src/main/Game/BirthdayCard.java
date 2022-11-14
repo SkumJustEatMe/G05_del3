@@ -9,8 +9,11 @@ public class BirthdayCard extends ChanceCard{
         this.amount = amount;
     }
     public void execute(Player p){
-        amount = p.getNumberofPlayers();
+        amount = p.getNumberofPlayers()-1;
         p.changeBalance(amount);
         p.otherPlayers.changeBalance(-1);
+    }
+    public String printText(){
+        return this.text;
     }
 }

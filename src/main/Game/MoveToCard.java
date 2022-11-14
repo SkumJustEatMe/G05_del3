@@ -1,6 +1,6 @@
 package Game;
 
-public class MoveToCard {
+public class MoveToCard extends ChanceCard{
     String text;
     int value;
     public MoveToCard(String text, int value){
