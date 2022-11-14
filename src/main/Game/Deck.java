@@ -1,33 +1,35 @@
 package Game;
 
+import java.util.Random;
+
 public class Deck {
     private ChanceCard[] cards = new ChanceCard[20];
 
     public Deck(){
         this.cards[0] = new FreeFieldCard("Gratis Felt!\nRyk frem til et orange felt.\n"+
                 "Hvis det er ledigt får du det GRATIS!\n"+
-                "Ellers skal du BETALE leje til ejeren.", 16, 15);
+                "Ellers skal du BETALE leje til ejeren.", "Orange", null);
         this.cards[1] = new FreeFieldCard("Gratis Felt!\nRyk frem til et orange eller grønt felt.\n"+
                 "Hvis det er ledigt, får du det Gratis!\n"+
-                "Ellers skal du BETALE leje til ejeren.", 12, 2);
+                "Ellers skal du BETALE leje til ejeren.", "Orange", "Grønt");
         this.cards[2] = new FreeFieldCard("Gratis Felt!\nRyk frem til et lyseblåt felt.\n"+
                 "Hvis det er ledigt, får du det Gratis!\n"+
-                "Ellers skal du BETALE leje til ejeren.", 12, 12);
+                "Ellers skal du BETALE leje til ejeren.", "Lyseblåt", null);
         this.cards[3] = new FreeFieldCard("Gratis Felt!\nRyk frem til et pink eller mørkeblåt felt.\n"+
                 "Hvis det er ledigt, får du det Gratis!\n"+
-                "Ellers skal du BETALE leje til ejeren.", 12, 2);
+                "Ellers skal du BETALE leje til ejeren.", "Pink", "Mørkeblåt");
         this.cards[4] = new FreeFieldCard("Gratis Felt!\nRyk frem til et rødt felt.\n"+
                 "Hvis det er ledigt, får du det Gratis!\n"+
-                "Ellers skal du BETALE leje til ejeren.", 12, 2);
+                "Ellers skal du BETALE leje til ejeren.", "Rødt", null);
         this.cards[5] = new FreeFieldCard("Gratis Felt!\nRyk frem til Skaterparken for at lave det perfekte grind!\n"+
                 "Hvis ingen ejer den, får du den Gratis!\n"+
-                "Ellers skal du BETALE leje til ejeren.", 12, 2);
+                "Ellers skal du BETALE leje til ejeren.","Orange", null );
         this.cards[6] = new FreeFieldCard("Gratis Felt!\nRyk frem til et lyseblåt eller rødt felt.\n"+
                 "Hvis det er ledigt, får du det Gratis!\n"+
-                "Ellers skal du BETALE leje til ejeren.", 12, 2);
+                "Ellers skal du BETALE leje til ejeren.", "Lyseblåt", "Rødt");
         this.cards[7] = new FreeFieldCard("Gratis Felt!\nRyk frem til et brunt eller gult felt.\n"+
                 "Hvis det er ledigt, får du det Gratis!\n"+
-                "Ellers skal du BETALE leje til ejeren.", 12, 2);
+                "Ellers skal du BETALE leje til ejeren.", "Brunt", "Gult");
         this.cards[8] = new GiveCardCard("Giv dette kort til BILEN, og tage et chancekort mere.\n"+
                 "BIL: På din næste tur skal du drøne frem til hvilket som helst ledigt felt og købe det.\n"+
                 "Hvis der ikke er nogen ledige felter, skal du købe et fra en anden spiller!", "BIL");
@@ -49,4 +51,5 @@ public class Deck {
         this.cards[18] = new RecieveOrPayCard("Du har labet alle dine lektier! MODTAG M2 fra banken.", 2);
         this.cards[19] = new BirthdayCard("Det er din fødselsdag! Alle giver dig M1.\n TILLYKKE MED FØDSELSDAGEN!", 1);
     }
+
 }

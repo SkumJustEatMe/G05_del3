@@ -9,7 +9,7 @@ public class MoveCard extends ChanceCard{
 
     public void execute(Player p){
         int spot;
-        p.curSqr = spot;
+        spot = p.curSqr;
         p.curSqr() = p.curSqr() + p.move(amount);
         if(spot > p.curSqr){
             p.changeBalance(200);

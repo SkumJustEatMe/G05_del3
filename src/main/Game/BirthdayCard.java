@@ -2,7 +2,7 @@ package Game;
 
 public class BirthdayCard extends ChanceCard{
     private String text;
-    private String amount;
+    private int amount;
 
     public BirthdayCard(String text, int amount){
         this.text = text;
