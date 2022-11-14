@@ -8,11 +8,10 @@ public class GiveCardCard extends ChanceCard{
         this.name = name;
     }
     public void execute(Player p, Board board) {
-        int spot = p.curSqr;
         GiveCardCard giveCardCard = new GiveCardCard(text,name);
         if (Player.name == true){
             if (p.name == name) {
-                giveCardCard.CardActivated();
+                giveCardCard.buyNextFieldCardActivated();
             } else {
                 Gamelogic.giveCardto(name);
                 Gamelogic.curPlayer.takeNewChanceCard();
@@ -24,32 +23,37 @@ public class GiveCardCard extends ChanceCard{
     public String printText(){
         return this.text;
     }
-    private void CardActivated(){
-        if(
+    private void buyNextFieldCardActivated(){
+        int spot = p.curSqr;
+        boolean j = true;
             for (int i = 0; i < 24; i++) {
             spot = +1;
             if (spot == 24) {
-                spot = 0;
+                spot = 1;
             }
-            if (board.owned() == false) {
+            if (board.number(spot).owned() == false) {
                 p.curSqr = spot;
                 p.curSqr.buyField;
                 p.changeBalance(-p.curSqr.price);
+                i = 24;
+                j = false;
             }
         }
-        for (int i = 0; i < 24; i++) {
-            spot = +1;
-            if (spot == 24) {
-                spot = 0;
+            if(j = true){
+            for (int i = 0; i < 24; i++) {
+                spot = +1;
+                if (spot == 24) {
+                    spot = 1;
+                }
+                if (board.number(spot).owned().otherPlayer == true) {
+                    p.curSqr = spot;
+                    p.curSqr.buyField;
+                    p.changeBalance(-p.curSqr.price);
+                    p.curSqr.owner.changeBalance(+p.curSqr.price));
+                    p.curSqr.newOwner(p);
+                    i = 24;
+                }
             }
-            if (board.owned().otherPlayer == true) {
-                p.curSqr = spot;
-                p.curSqr.buyField;
-                p.changeBalance(-p.curSqr.price);
-                p.curSqr.owner.changeBalance(+p.curSqr.rent());
-                p.curSqr.newOwner(p);
-            }
-    }
-
+        }
 }
 }
