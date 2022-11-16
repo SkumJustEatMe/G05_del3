@@ -1,0 +1,108 @@
+@startuml
+'https://plantuml.com/class-diagram
+skinparam classAttributeIconSize 0
+
+class Player{
+- balance : int
+- turnOrderId : int
++ getTurnOrderId() : int
++ setTurnOrderId() : void
++ getBalance() : int
++ changeBalance() : int
+}
+class Gamecontroller{
+- currentDiceroll: int
+- Player
+- Die
++ startGameLoop()
+- printScore()
+- evaluateGameProgress()
+-printWinnerAndExit()
+-printFieldDescription()
+-updatePlayerBalance()
+-requestInputToStart()
+-updateCurrentPlayer()
+-rollDice()
+}
+class Game{
+- Player
+- Die
++ run()
+}
+class Die{
+- MAX : int
+- faceValue : int
++getFacevalue() : int
++roll() : int
++toString() : String
+}
+class Board{
+{static}+ getFieldDescription() : String
+{static}+ getFieldName() : String
+{static}+ getBalanceChange() : int
+}
+class Main{
++ main()
+}
+class GUI{
++setFieldInformation() : void
++displayDieRoll() :
++displayPlayerBalance() :
++addPlayerToBoard() :
++moveCarToField() :
+}
+
+abstract class ChanceCard{
+RandomCardEffect
+}
+
+class MoveCard{}
+
+class FreeFieldCard{}
+
+class GiveCardCard{}
+
+class RecieveOrPayCard{}
+
+class GetOutOfJailCard{}
+
+class DiceCup{
+DiceValue
+}
+
+abstract class Field{}
+
+class JailField{}
+
+class StartField{}
+
+class ChanceField{}
+
+class GoToJailField{}
+
+class ParkingField{}
+
+class BuyableField{}
+
+Die "2"--"1" DiceCup : contains
+DiceCup "1" -- "1" Game : contains
+Gamecontroller "1"--"1" Game : evaluates
+Gamecontroller "1"--"1" Board : evaluates
+Game "1"--"1" Main : runs
+Player "2"--"1" Game : contains
+GUI"1" -- "1"Gamecontroller : sendsInformation
+Board "1" -- "24" Field : contains
+Game "1" -- "20" ChanceCard : contains
+Field "1" <|-- "1" JailField : isA
+Field "1" <|-- "1" StartField : isA
+Field "1" <|-- "1" ChanceField : isA
+Field "1" <|-- "1" GoToJailField : isA
+Field "1" <|-- "1" ParkingField : isA
+Field "1" <|-- "1" BuyableField : isA
+ChanceCard "20" <|-- "4" MoveCard : isA
+ChanceCard "20" <|-- "8" FreeFieldCard : isA
+ChanceCard "20" <|-- "4" GiveCardCard : isA
+ChanceCard "20" <|-- "3" RecieveOrPayCard : isA
+ChanceCard "20" <|-- "1" GetOutOfJailCard : isA
+
+@enduml
