@@ -7,4 +7,16 @@ public class Field {
         description = fieldDescription;
         balanceChange = fieldBalanceChange;
     }
+
+    public String getName(){
+        return name;
+    }
+
+    public String getDescription(){
+        return description;
+    }
+
+    public int getBalanceChange(){
+        return balanceChange;
+    }
 }
