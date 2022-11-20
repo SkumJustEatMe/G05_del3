@@ -1,6 +1,8 @@
 package Game;
 
-public class Board {
+public class GameBoard {
+
+    private Field[24];
     public static String getFieldName(int roll){
         String name = null;
         switch (roll) {

@@ -3,14 +3,12 @@ package Game;
 import gui_fields.*;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class GUI {
     private gui_main.GUI gui;
     private GUI_Field[] fields;
-    private GUI_Player player1;
-    private GUI_Player player2;
-    private GUI_Player player3;
-    private GUI_Player player4;
+    private ArrayList<GUI_Player> players;
     private GUI_Car car1;
     private GUI_Car car2;
     private GUI_Car car3;
@@ -67,7 +65,7 @@ public class GUI {
     }
     public void setBoardFields() {
 
-        emptyField(1);
+       emptyField(1);
        ownableField(2,"Test", Color.darkGray);
        ownableField(3,"Test", Color.darkGray);
        chanceField(4);
@@ -95,6 +93,7 @@ public class GUI {
 
 
     }
+
     public void addPlayerToBoard(int antal) {
         switch (antal){
             case 1:
@@ -126,9 +125,18 @@ public class GUI {
                 player4.getCar().setPosition(fields[0]);
                 break;
         }
-
-
     }
+
+
+    private void addPlayersToBoard()
+    {
+        for (GUI_Player i : this.players)
+        {
+            gui.addPlayer(i);
+            i.getCar().setPosition(fields[0]);
+        }
+    }
+
     public void displayDieRoll(int DieRoll1, int DieRoll2) {
         gui.setDice(DieRoll1, DieRoll2);
     }
