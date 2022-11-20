@@ -1,25 +1,23 @@
 package Game;
 
+import java.awt.*;
+
 public class PropertyField extends Field {
 
-    private final int price;
-    public int getPrice() {return this.price;}
+    private final int value;
+    public int getValue() {return this.value;}
 
-    private final int rent;
-    public int getRent() {return this.rent;}
-
-    private final String color;
-    public String getColor() {return this.color;}
+    private final Color color;
+    public Color getColor() {return this.color;}
 
     private Player owner;
     public Player getOwner() {return this.owner;}
     public void setOwner(Player owner) {this.owner = owner;}
 
-    PropertyField(String name, String description, int price, int rent, String color)
+    PropertyField(String name, int value, Color color)
     {
-        super(name, description);
-        this.price = price;
-        this.rent = rent;
+        super(name);
+        this.value = value;
         this.color = color;
     }
 
