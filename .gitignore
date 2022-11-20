@@ -5,4 +5,4 @@ target/
 *.iws
 *.zip
 *.class
-
+*.DS_Store
