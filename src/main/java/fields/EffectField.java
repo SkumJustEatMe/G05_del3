@@ -1,4 +1,4 @@
-package Game;
+package fields;
 
 public class EffectField extends Field
 {

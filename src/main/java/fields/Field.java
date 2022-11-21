@@ -1,4 +1,4 @@
-package Game;
+package fields;
 
 public class Field
 {

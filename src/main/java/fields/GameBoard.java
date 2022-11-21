@@ -1,4 +1,4 @@
-package Game;
+package fields;
 
 import java.awt.*;
 

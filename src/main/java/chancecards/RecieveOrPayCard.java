@@ -1,5 +1,9 @@
-package Game;
-public class RecieveOrPayCard extends ChanceCard{
+package chancecards;
+
+import chancecards.ChanceCard;
+import game.Player;
+
+public class RecieveOrPayCard extends ChanceCard {
     protected String text;
     protected int amount;
     RecieveOrPayCard(String text, int amount){

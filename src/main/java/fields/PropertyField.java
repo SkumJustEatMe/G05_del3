@@ -1,4 +1,7 @@
-package Game;
+package fields;
+
+import fields.Field;
+import game.Player;
 
 import java.awt.*;
 

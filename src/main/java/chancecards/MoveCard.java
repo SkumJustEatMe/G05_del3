@@ -1,5 +1,9 @@
-package Game;
-public class MoveCard extends ChanceCard{
+package chancecards;
+
+import chancecards.ChanceCard;
+import game.Player;
+
+public class MoveCard extends ChanceCard {
     String text;
     int amount;
     MoveCard(String text, int value){

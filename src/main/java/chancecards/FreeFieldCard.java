@@ -1,5 +1,9 @@
-package Game;
-public class FreeFieldCard extends ChanceCard{
+package chancecards;
+
+import chancecards.ChanceCard;
+import game.Player;
+
+public class FreeFieldCard extends ChanceCard {
     String text, color, color2;
 
     public FreeFieldCard(String text, String color, String color2){

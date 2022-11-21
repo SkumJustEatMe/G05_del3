@@ -1,6 +1,8 @@
-package Game;
+package chancecards;
 
-public class BirthdayCard extends ChanceCard{
+import game.Player;
+
+public class BirthdayCard extends ChanceCard {
     private String text;
     private int amount;
 

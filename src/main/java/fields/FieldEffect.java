@@ -1,4 +1,4 @@
-package Game;
+package fields;
 
 enum FieldEffect {
     Chance,

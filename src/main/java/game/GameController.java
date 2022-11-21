@@ -1,6 +1,5 @@
-package Game;
+package game;
 
-import java.util.Scanner;
 import java.util.ArrayList;
 
 public class GameController

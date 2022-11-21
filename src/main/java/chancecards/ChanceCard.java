@@ -1,4 +1,7 @@
-package Game;
+package chancecards;
+
+import game.Player;
+
 public abstract class ChanceCard {
 
     public ChanceCard(){}

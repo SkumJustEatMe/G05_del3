@@ -1,6 +1,6 @@
-package Game;
+package chancecards;
 
-import java.util.Random;
+import chancecards.*;
 
 public class Deck {
     private ChanceCard[] cards = new ChanceCard[20];

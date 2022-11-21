@@ -1,5 +1,9 @@
-package Game;
-public class GetOutOfJailCard extends ChanceCard{
+package chancecards;
+
+import chancecards.ChanceCard;
+import game.Player;
+
+public class GetOutOfJailCard extends ChanceCard {
     String text;
 
     public GetOutOfJailCard(String text){

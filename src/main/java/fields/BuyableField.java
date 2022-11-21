@@ -1,6 +1,6 @@
-package Game;
+package fields;
 
-public class BuyableField extends Field{
+public class BuyableField extends Field {
     int buyingPrice;
     String colour;
      public BuyableField(int buyingPrice, String colour){
