@@ -1,32 +1,17 @@
 package game;
 
 public class Player {
-        private int balance;
+    private int balance;
+    public int getBalance() { return(balance); }
+    private int position;
+    public int getPosition() { return this.position; }
+    public void setPosition(int newPosition){ this.position = newPosition; }
 
-        private int turnOrderId;
+    public void changeBalance(int balanceChange) {
+        balance += balanceChange;
 
-        public Player() // Vores construktor
-        {
-            balance = 1000;
+        if (balance < 0) {
+            balance = 0;
         }
-
-        public int getTurnOrderId() {
-            return turnOrderId;
-        }
-
-        public void setTurnOrderId(int numberInTurnOrder) {
-            this.turnOrderId = numberInTurnOrder;
-        }
-
-        public int getBalance(){
-            return(balance);
-        }
-
-        public void changeBalance(int balanceChange){
-            balance += balanceChange;
-
-            if(balance<0){
-                balance = 0;
-            }
-        }
+    }
 }
