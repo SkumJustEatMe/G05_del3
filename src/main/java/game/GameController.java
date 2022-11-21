@@ -1,20 +1,25 @@
 package game;
 
+import fields.GameBoard;
+
 import java.util.ArrayList;
 
 public class GameController
 {
     private Die die;
     private int currentDiceRoll = 0;
+    private GameBoard gameBoard = new GameBoard();
     private ArrayList<Player> players;
-    private Player currentPlayer;
+    private int indexOfCurrentPlayer;
     private GUI gui;
 
-    public GameController(Die die)
+    public GameController()
     {
-        this.die = die;
+        this.die = new Die();
+        this.gameBoard = new GameBoard();
         this.players = new ArrayList<Player>();
         this.addPlayers(4);
+        this.currentPlayer = this.players.get(0);
         this.gui = new GUI();
     }
 
@@ -34,25 +39,41 @@ public class GameController
 
     private void initiatlize()
     {
-        // initialize beginning game state
-
+        // initialize gui if needed
     }
 
     private void startGameLoop()
     {
         while(true)
         {
-            // player rolls dice
+            rollDice();
             // move player
-            // evaluate field
+            evaluateField();
             // execute field effect
             // update player properties
-            //
+            setNextPlayer();
         }
     }
 
+
     private void rollDice()
     {
-        this.currentDiceRoll = this.die1.roll() + this.die2.roll();
+        this.currentDiceRoll = this.die.roll() + this.die.roll();
+    }
+
+
+    private void setNextPlayer()
+    {
+        if (this.indexOfCurrentPlayer + 1 < this.players.size()) {
+            this.indexOfCurrentPlayer++;
+        }
+        else {
+            this.indexOfCurrentPlayer = 0;
+        }
+    }
+
+    private void evaluateField()
+    {
+
     }
 }
