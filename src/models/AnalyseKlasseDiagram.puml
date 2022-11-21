@@ -36,12 +36,12 @@ Start
 
 
 
-DiceCup "1"--"1" Game : containes
-Die "2" -- "1" DiceCup : containes
+DiceCup "1"--"1" Game : contains
+Die "2" -- "1" DiceCup : contains
 Game"1"--"1" Board : evaluates
-Player "2"--"1" Game : containes
-ChanceCard "1..*" -- Game : containes
-Field "40" -- "1" Board : containes
+Player "2"--"1" Game : contains
+ChanceCard "1..*" -- Game : contains
+Field "40" -- "1" Board : contains
 
 
 

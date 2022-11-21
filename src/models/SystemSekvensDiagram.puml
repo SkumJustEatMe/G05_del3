@@ -1,0 +1,11 @@
+@startuml
+actor Observer
+participant System
+
+Observer -> System : playGame
+loop no loser
+System --> Observer: currentPlayer, diceTotal, fieldEffect, playerBalance
+end
+System --> Observer: returnsWinner
+
+@enduml
