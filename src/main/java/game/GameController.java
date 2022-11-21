@@ -8,7 +8,7 @@ public class GameController
 {
     private Die die;
     private int currentDiceRoll = 0;
-    private GameBoard gameBoard = new GameBoard();
+    private GameBoard gameBoard;
     private ArrayList<Player> players;
     private int indexOfCurrentPlayer;
     private GUI gui;
@@ -19,7 +19,10 @@ public class GameController
         this.gameBoard = new GameBoard();
         this.players = new ArrayList<Player>();
         this.addPlayers(4);
-        this.currentPlayer = this.players.get(0);
+        for (Player i : this.players) {
+            i.setPosition(0);
+        }
+        this.indexOfCurrentPlayer = 0;
         this.gui = new GUI();
     }
 
@@ -55,12 +58,10 @@ public class GameController
         }
     }
 
-
     private void rollDice()
     {
         this.currentDiceRoll = this.die.roll() + this.die.roll();
     }
-
 
     private void setNextPlayer()
     {
