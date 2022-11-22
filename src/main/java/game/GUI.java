@@ -1,5 +1,6 @@
 package game;
 
+import fields.GameBoard;
 import gui_fields.*;
 
 import java.awt.*;
@@ -9,26 +10,19 @@ public class GUI {
     private gui_main.GUI gui;
     private GUI_Field[] fields;
     private ArrayList<GUI_Player> players;
-    private GUI_Car car1;
-    private GUI_Car car2;
-    private GUI_Car car3;
-    private GUI_Car car4;
-    public GUI(){
-        this.fields = new GUI_Field[24];
+    private Color[] playerColors = {
+            Color.yellow,
+            Color.red,
+            Color.black,
+            Color.blue
+    };
+    private ArrayList<GUI_Car> cars;
+    public GUI(int numberOfplayers, GameBoard gameBoard){
+        this.fields = new GUI_Field[gameBoard.];
         setBoardFields();
         this.gui = new gui_main.GUI(fields, Color.white);
-        this.car1 = new GUI_Car();
-        this.car1.setPrimaryColor(Color.YELLOW);
-        this.car2 = new GUI_Car();
-        this.car2.setPrimaryColor(Color.RED);
-        this.car3 = new GUI_Car();
-        this.car3.setPrimaryColor(Color.black);
-        this.car4 = new GUI_Car();
-        this.car4.setPrimaryColor(Color.blue);
-        this.player1 = new GUI_Player("Player 1",1000, this.car1);
-        this.player2 = new GUI_Player("Player 2",1000, this.car2);
-        this.player3 = new GUI_Player("Player 3",1000, this.car3);
-        this.player4 = new GUI_Player("Player 4",1000, this.car4);
+        addPlayersToBoard(numberOfplayers);
+        addCarsToBoard();
     }
 
     public void emptyField(int fieldNumber){
@@ -94,46 +88,22 @@ public class GUI {
 
     }
 
-    public void addPlayerToBoard(int antal) {
-        switch (antal){
-            case 1:
-                gui.addPlayer(this.player1);
-                player1.getCar().setPosition(fields[0]);
-                break;
-            case 2:
-                gui.addPlayer(this.player1);
-                gui.addPlayer(this.player2);
-                player1.getCar().setPosition(fields[0]);
-                player2.getCar().setPosition(fields[0]);
-                break;
-            case 3:
-                gui.addPlayer(this.player1);
-                gui.addPlayer(this.player2);
-                gui.addPlayer(this.player3);
-                player1.getCar().setPosition(fields[0]);
-                player2.getCar().setPosition(fields[0]);
-                player3.getCar().setPosition(fields[0]);
-                break;
-            case 4:
-                gui.addPlayer(this.player1);
-                gui.addPlayer(this.player2);
-                gui.addPlayer(this.player3);
-                gui.addPlayer(this.player4);
-                player1.getCar().setPosition(fields[0]);
-                player2.getCar().setPosition(fields[0]);
-                player3.getCar().setPosition(fields[0]);
-                player4.getCar().setPosition(fields[0]);
-                break;
+    private void addCarsToBoard()
+    {
+        for (int i = 0; i < this.players.size(); i++)
+        {
+            this.cars.add(new GUI_Car());
+            this.cars.get(i).setPrimaryColor(this.playerColors[i]);
         }
     }
 
-
-    private void addPlayersToBoard()
+    private void addPlayersToBoard(int numberOfPlayers)
     {
-        for (GUI_Player i : this.players)
+        for (int i = 1; i <= numberOfPlayers; i++)
         {
-            gui.addPlayer(i);
-            i.getCar().setPosition(fields[0]);
+            this.players.add(new GUI_Player("Player " + i));
+            gui.addPlayer(this.players.get(i - 1));
+            this.players.get(i - 1).getCar().setPosition(fields[0]);
         }
     }
 
@@ -169,5 +139,4 @@ public class GUI {
             String buyButton = gui.getUserButtonPressed("", "Roll Dice");
         }
     }
-
 }
