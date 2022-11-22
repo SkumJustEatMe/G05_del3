@@ -27,7 +27,7 @@ public class GameController
             i.setPosition(0);
         }
         this.indexOfCurrentPlayer = 0;
-        this.gui = new GUI();
+        this.gui = new GUI(this.gameBoard, this.players);
     }
 
     private void addPlayers(int numberOfPlayers)
