@@ -1,6 +1,5 @@
 package game;
 
-import chancecards.*;
 import fields.*;
 
 import java.util.ArrayList;
@@ -10,8 +9,9 @@ public class GameController
     private Die die;
     private int currentDiceRollSum = 0;
     private GameBoard gameBoard;
-    private Deck deck;
+    // private Deck deck;
     private ArrayList<Player> players;
+    public ArrayList<Player> getPlayers() { return this.players; }
     private Player getCurrentPlayer() { return this.players.get(indexOfCurrentPlayer); }
     private int indexOfCurrentPlayer;
     private GUI gui;
@@ -20,17 +20,17 @@ public class GameController
     {
         this.die = new Die();
         this.gameBoard = new GameBoard();
-        this.deck = new Deck();
+        //this.deck = new Deck();
         this.players = new ArrayList<Player>();
         this.indexOfCurrentPlayer = 0;
-        this.gui = new GUI(this.gameBoard, this.players);
+        this.gui = new GUI(this.gameBoard, this);
     }
 
     private void addPlayersAndSetPosition(int numberOfPlayers)
     {
         for (int i = 1; i <= numberOfPlayers; i++)
         {
-            this.players.add(new Player(i));
+            this.players.add(new Player(i, 20));
         }
         for (Player i : this.players) {
             i.setPosition(0);
@@ -46,6 +46,8 @@ public class GameController
     private void initialize()
     {
         this.addPlayersAndSetPosition(this.getNumberOfPlayers());
+        this.gui.addPlayersToBoard(this.players.size());
+        this.gui.addCarsToBoard();
     }
 
     private void startGameLoop()
@@ -62,7 +64,7 @@ public class GameController
             setNextPlayer();
         }
         Player winner = getMostWealthy();
-        // display winner and quit
+        this.gui.displayWinnerAndExit(winner);
     }
 
 
@@ -108,10 +110,10 @@ public class GameController
         {
             executePropertyField(propertyField);
         }
-        else if (field instanceof EventField eventField)
-        {
-            executeEventField(eventField);
-        }
+        // else if (field instanceof EventField eventField)
+        // {
+        //     executeEventField(eventField);
+        // }
     }
 
     private void executePropertyField(PropertyField propertyField)
@@ -128,17 +130,17 @@ public class GameController
         }
     }
 
-    private void executeEventField(EventField eventField)
-    {
-        if (eventField.getFieldEvent() == FieldEvent.Chance)
-        {
-            this.deck.getCard().execute(getCurrentPlayer());
-        }
-        else if (eventField.getFieldEvent() == FieldEvent.GoToJail)
-        {
-            getCurrentPlayer().setPosition(this.gameBoard.getIndexOfGoToJail());
-        }
-    }
+//    private void executeEventField(EventField eventField)
+//    {
+//        if (eventField.getFieldEvent() == FieldEvent.Chance)
+//        {
+//            this.deck.getCard().execute(getCurrentPlayer());
+//        }
+//        else if (eventField.getFieldEvent() == FieldEvent.GoToJail)
+//        {
+//            getCurrentPlayer().setPosition(this.gameBoard.getIndexOfGoToJail());
+//        }
+//    }
 
     private boolean foundLoser()
     {
@@ -165,12 +167,14 @@ public class GameController
         return mostWealthy;
     }
     private int getNumberOfPlayers() {
-        return Integer.parseInt(this.gui.displayPlayerSelectionButtons());
+        String result = (this.gui.displayPlayerSelectionButtons());
+        return Integer.parseInt(String.valueOf(result.charAt(0)));
     }
 
     private void getUserInputToBegin() {
-        if (this.gui.displayRollDiceButton().equals("Roll dice")) {
+        if (this.gui.displayRollDiceButton(getCurrentPlayer().getName()).equals("Roll dice")) {
             return;
         }
     }
+
 }

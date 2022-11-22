@@ -9,8 +9,8 @@ import java.util.ArrayList;
 
 public class GUI {
     private gui_main.GUI gui;
+    private GameController gameController;
     private GameBoard gameBoard;
-    private ArrayList<Player> players;
     private GUI_Field[] fields;
     private ArrayList<GUI_Player> gui_players;
     private Color[] playerColors = {
@@ -20,14 +20,14 @@ public class GUI {
             Color.blue
     };
     private ArrayList<GUI_Car> cars;
-    public GUI(GameBoard gameBoard, ArrayList<Player> players){
+    public GUI(GameBoard gameBoard, GameController gameController){
         this.gameBoard = gameBoard;
-        this.players = players;
+        this.gameController = gameController;
+        this.gui_players = new ArrayList<GUI_Player>();
+        this.cars = new ArrayList<GUI_Car>();
         this.fields = new GUI_Field[gameBoard.getFieldList().length];
         populateFields();
         this.gui = new gui_main.GUI(fields, Color.white);
-        addPlayersToBoard(this.players.size());
-        addCarsToBoard();
     }
 
     public void createStartField(int fieldIndex){
@@ -61,34 +61,35 @@ public class GUI {
     public void createJailField(int fieldIndex){
         GUI_Jail gui_field = new GUI_Jail();
         EventField field = (EventField) this.gameBoard.getFieldList()[fieldIndex];
+        gui_field.setTitle(field.getName());
         gui_field.setDescription(field.getName());
         gui_field.setSubText("");
         fields[fieldIndex] = gui_field;
     }
     public void createEmptyField(int fieldIndex)
     {
-        GUI_Empty gui_field = new GUI_Empty();
+        GUI_Street gui_field = new GUI_Street();
         Field field = this.gameBoard.getFieldList()[fieldIndex];
         gui_field.setTitle(field.getName());
-        gui_field.setSubText("");
         gui_field.setDescription(field.getName());
+        gui_field.setSubText("");
         fields[fieldIndex] = gui_field;
     }
     public void populateFields() {
         // should be generated automatically based on gameBoard
         createStartField(0);
-        createPropertyField(1,"unowned", Color.darkGray);
-        createPropertyField(2,"unowned", Color.darkGray);
+        createPropertyField(1,"unowned", Color.gray);
+        createPropertyField(2,"unowned", Color.gray);
         createChanceField(3);
         createPropertyField(4, "unowned", Color.cyan);
         createPropertyField(5, "unowned", Color.cyan);
-        createStartField(6);
+        createEmptyField(6);
         createPropertyField(7, "unowned", Color.magenta);
         createPropertyField(8, "unowned", Color.magenta);
         createChanceField(9);
         createPropertyField(10, "unowned", Color.orange);
         createPropertyField(11, "unowned", Color.orange);
-        createStartField(12);
+        createEmptyField(12);
         createPropertyField(13, "unowned", Color.red);
         createPropertyField(14, "unowned", Color.red);
         createChanceField(15);
@@ -102,22 +103,24 @@ public class GUI {
         createPropertyField(23, "unowned", Color.blue);
     }
 
-    private void addCarsToBoard()
+    public void addCarsToBoard()
     {
         for (int i = 0; i < this.gui_players.size(); i++)
         {
             this.cars.add(new GUI_Car());
             this.cars.get(i).setPrimaryColor(this.playerColors[i]);
+            this.cars.get(i).setSecondaryColor(this.playerColors[i]);
         }
     }
 
-    private void addPlayersToBoard(int numberOfPlayers)
+    public void addPlayersToBoard(int numberOfPlayers)
     {
-        for (int i = 1; i <= numberOfPlayers; i++)
+        for (int i = 0; i < numberOfPlayers; i++)
         {
-            this.gui_players.add(new GUI_Player("Player " + i));
-            gui.addPlayer(this.gui_players.get(i - 1));
-            this.gui_players.get(i - 1).getCar().setPosition(fields[0]);
+            this.gui_players.add(new GUI_Player( this.gameController.getPlayers().get(i).getName()));
+            gui.addPlayer(this.gui_players.get(i));
+            this.gui_players.get(i).getCar().setPosition(fields[0]);
+            this.gui_players.get(i).setBalance(this.gameController.getPlayers().get(i).getBalance());
         }
     }
 
@@ -126,21 +129,28 @@ public class GUI {
     }
 
     public void moveCarToField(int indexOfCurrentPlayer){
-            this.gui_players.get(indexOfCurrentPlayer).getCar().setPosition(fields[this.players.get(indexOfCurrentPlayer).getPosition()]);
+            this.gui_players.get(indexOfCurrentPlayer).getCar().setPosition(fields[this.gameController.getPlayers().get(indexOfCurrentPlayer).getPosition()]);
     }
 
     public void displayPlayerBalance() {
-        for (int i = 0; i < this.players.size(); i++)
+        for (int i = 0; i < this.gameController.getPlayers().size(); i++)
         {
-            this.gui_players.get(i).setBalance(this.players.get(i).getBalance());
+            this.gui_players.get(i).setBalance(this.gameController.getPlayers().get(i).getBalance());
         }
     }
-    public String displayRollDiceButton(){
-        return this.gui.getUserButtonPressed("", "Roll dice");
+    public String displayRollDiceButton(String playerName){
+        return this.gui.getUserButtonPressed(playerName, "Roll dice");
     }
 
     public String displayPlayerSelectionButtons()
     {
-        return gui.getUserButtonPressed("Select number of players:", "1 Player", "2 Players", "3 Players", "4 Players");
+        var result = this.gui.getUserButtonPressed("Select number of players:", "2 Players", "3 Players", "4 Players");
+        return result;
+    }
+
+    public void displayWinnerAndExit(Player player)
+    {
+        this.gui.getUserButtonPressed(String.format("Congratulations %1$s, you've won!", player.getName()), "Exit");
+        System.exit(0);
     }
 }

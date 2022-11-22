@@ -23,8 +23,9 @@ public class Player {
     public int getPosition() { return this.position; }
     public void setPosition(int newPosition){ this.position = newPosition; }
 
-    public Player(int playerNumber){
+    public Player(int playerNumber, int startingBalance){
         this.name = "Player " + playerNumber;
+        this.balance = startingBalance;
     }
 
 }

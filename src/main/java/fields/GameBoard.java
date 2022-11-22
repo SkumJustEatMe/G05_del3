@@ -29,6 +29,9 @@ public class GameBoard {
             new EventField("Gå i fængsel", FieldEvent.GoToJail),
             new PropertyField("Bowlinghallen", 4, Color.green),
             new PropertyField("Zoo", 4, Color.green),
+            new EventField("Chance", FieldEvent.Chance),
+            new PropertyField("Vandlandet", 5, Color.blue),
+            new PropertyField("Strandpromenaden", 5, Color.blue)
     };
 
     public int getIndexOfGoToJail() {
@@ -42,9 +45,7 @@ public class GameBoard {
         }
         return index;
     }
-    public Field[] getFieldList() { return Arrays.copyOf(this.FieldList, this.FieldList.length); }
-
-
+    public Field[] getFieldList() { return this.FieldList; }
 
     public GameBoard()
     {
