@@ -109,7 +109,6 @@ public class GUI {
         {
             this.cars.add(new GUI_Car());
             this.cars.get(i).setPrimaryColor(this.playerColors[i]);
-            this.cars.get(i).setSecondaryColor(this.playerColors[i]);
         }
     }
 
@@ -124,8 +123,8 @@ public class GUI {
         }
     }
 
-    public void displayDieRoll(int DieRoll1, int DieRoll2) {
-        gui.setDice(DieRoll1, DieRoll2);
+    public void displayDieRoll(int dieRoll) {
+        gui.setDie(dieRoll);
     }
 
     public void moveCarToField(int indexOfCurrentPlayer){
