@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class GameController
 {
     private Die die;
-    private int currentDiceRollSum = 0;
+    private int currentDieRoll = 0;
     private GameBoard gameBoard;
     // private Deck deck;
     private ArrayList<Player> players;
@@ -55,8 +55,8 @@ public class GameController
         while(!foundLoser())
         {
             getUserInputToBegin();
-            int[] diceRoll = rollDice();
-            this.gui.displayDieRoll(diceRoll[0], diceRoll[1]);
+            rollDice();
+            this.gui.displayDieRoll(this.currentDieRoll);
             movePlayer();
             this.gui.moveCarToField(indexOfCurrentPlayer);
             evaluateFieldAndExecute();
@@ -69,11 +69,9 @@ public class GameController
     }
 
 
-    private int[] rollDice()
+    private void rollDice()
     {
-        int[] diceRoll = {this.die.roll(), this.die.roll()};
-        this.currentDiceRollSum = diceRoll[0] + diceRoll[1];
-        return diceRoll;
+        this.currentDieRoll = this.die.roll();
     }
 
     private void setNextPlayer()
@@ -91,18 +89,18 @@ public class GameController
 
         if (hasReachedStartField())
         {
-            getCurrentPlayer().setPosition(currentPosition + this.currentDiceRollSum - this.gameBoard.getFieldList().length);
+            getCurrentPlayer().setPosition(currentPosition + this.currentDieRoll - this.gameBoard.getFieldList().length);
             getCurrentPlayer().changeBalance(2);
         }
         else
         {
-            getCurrentPlayer().setPosition(currentPosition + this.currentDiceRollSum);
+            getCurrentPlayer().setPosition(currentPosition + this.currentDieRoll);
         }
     }
 
     private boolean hasReachedStartField()
     {
-        return getCurrentPlayer().getPosition() + this.currentDiceRollSum >= this.gameBoard.getFieldList().length;
+        return getCurrentPlayer().getPosition() + this.currentDieRoll >= this.gameBoard.getFieldList().length;
     }
 
     private void evaluateFieldAndExecute()
