@@ -2,6 +2,9 @@ package game;
 
 public class Player {
     private int balance;
+
+    private String name;
+    public String getName() { return this.name; }
     public int getBalance() { return this.balance; }
 
     /**
@@ -19,5 +22,9 @@ public class Player {
     private int position;
     public int getPosition() { return this.position; }
     public void setPosition(int newPosition){ this.position = newPosition; }
+
+    public Player(int playerNumber){
+        this.name = "Player " + playerNumber;
+    }
 
 }

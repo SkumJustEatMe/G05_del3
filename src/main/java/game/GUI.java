@@ -1,5 +1,6 @@
 package game;
 
+import fields.*;
 import fields.GameBoard;
 import gui_fields.*;
 
@@ -30,71 +31,75 @@ public class GUI {
     }
 
     public void createStartField(int fieldIndex){
-        GUI_Start field = new GUI_Start();
-        field.setTitle(this.gameBoard.getFieldList()[fieldIndex].getName());
-        field.setDescription(this.gameBoard.getFieldList()[fieldIndex].getName());
-        field.setSubText("");
-        fields[fieldIndex] = field;
+        GUI_Start gui_field = new GUI_Start();
+        Field field = this.gameBoard.getFieldList()[fieldIndex];
+        gui_field.setTitle(field.getName());
+        gui_field.setDescription(field.getName());
+        gui_field.setSubText("");
+        this.fields[fieldIndex] = gui_field;
     }
     public void createPropertyField(int fieldIndex, String owner, Color color){
-        GUI_Street field = new GUI_Street();
-        field.setTitle(Board.getFieldName(fieldIndex));
-        field.setDescription(Board.getFieldDescription(fieldIndex));
-        field.setSubText("Price: " + Board.getFieldPrice(fieldIndex));
-        field.setRent(Integer.toString(Board.getRentPrice(fieldIndex)));
-        field.setRentLabel("Rent price: ");
-        field.setOwnerName(owner);
-        field.setOwnableLabel("Owned by: ");
-        field.setBackGroundColor(color);
-        fields[fieldIndex] = field;
+        GUI_Street gui_field = new GUI_Street();
+        PropertyField field = (PropertyField) this.gameBoard.getFieldList()[fieldIndex];
+        gui_field.setTitle(field.getName());
+        gui_field.setDescription(field.getName());
+        gui_field.setSubText("Price: " + field.getValue());
+        gui_field.setRent(Integer.toString(field.getValue()));
+        gui_field.setRentLabel("Rent price: ");
+        gui_field.setOwnerName(field.getOwner() == null ? "unowned" : field.getOwner().getName());
+        gui_field.setBackGroundColor(color);
+        this.fields[fieldIndex] = gui_field;
 
     }
     public void createChanceField(int fieldIndex){
-        GUI_Chance field = new GUI_Chance();
-        field.setDescription(Board.getFieldDescription(fieldIndex));
-        field.setBackGroundColor(Color.green);
-        fields[fieldIndex] = field;
+        GUI_Chance gui_field = new GUI_Chance();
+        EventField field = (EventField) this.gameBoard.getFieldList()[fieldIndex];
+        gui_field.setDescription(field.getName());
+        gui_field.setBackGroundColor(Color.green);
+        this.fields[fieldIndex] = gui_field;
     }
     public void createJailField(int fieldIndex){
-        GUI_Jail field = new GUI_Jail();
-        field.setSubText(Board.getFieldName(fieldIndex));
-        field.setDescription(Board.getFieldDescription(fieldInex));
-        fields[fieldIndex] = field;
+        GUI_Jail gui_field = new GUI_Jail();
+        EventField field = (EventField) this.gameBoard.getFieldList()[fieldIndex];
+        gui_field.setDescription(field.getName());
+        gui_field.setSubText("");
+        fields[fieldIndex] = gui_field;
     }
     public void createEmptyField(int fieldIndex)
     {
-        GUI_Empty field = new GUI_Empty();
-        field.setTitle(this.gameBoard.getFieldList()[fieldIndex].getName());
-        field.setSubText(Board.getFieldName(fieldIndex));
-        field.setDescription(Board.getFieldDescription(fieldIndex));
-        fields[fieldIndex] = field;
+        GUI_Empty gui_field = new GUI_Empty();
+        Field field = this.gameBoard.getFieldList()[fieldIndex];
+        gui_field.setTitle(field.getName());
+        gui_field.setSubText("");
+        gui_field.setDescription(field.getName());
+        fields[fieldIndex] = gui_field;
     }
     public void populateFields() {
-
-       createStartField(0);
-       createPropertyField(1,"unowned", Color.darkGray);
-       createPropertyField(2,"unowned", Color.darkGray);
-       createChanceField(3);
-       createPropertyField(4, "unowned", Color.cyan);
-       createPropertyField(5, "unowned", Color.cyan);
-       createStartField(6);
-       createPropertyField(7, "unowned", Color.magenta);
-       createPropertyField(8, "unowned", Color.magenta);
-       createChanceField(9);
-       createPropertyField(10, "unowned", Color.orange);
-       createPropertyField(11, "unowned", Color.orange);
-       createStartField(12);
-       createPropertyField(13, "unowned", Color.red);
-       createPropertyField(14, "unowned", Color.red);
-       createChanceField(15);
-       createPropertyField(16, "unowned", Color.yellow);
-       createPropertyField(17, "unowned", Color.yellow);
-       createJailField(18);
-       createPropertyField(19, "unowned", Color.pink);
-       createPropertyField(20, "unowned", Color.pink);
-       createChanceField(21);
-       createPropertyField(22, "unowned", Color.blue);
-       createPropertyField(23, "unowned", Color.blue);
+        // should be generated automatically based on gameBoard
+        createStartField(0);
+        createPropertyField(1,"unowned", Color.darkGray);
+        createPropertyField(2,"unowned", Color.darkGray);
+        createChanceField(3);
+        createPropertyField(4, "unowned", Color.cyan);
+        createPropertyField(5, "unowned", Color.cyan);
+        createStartField(6);
+        createPropertyField(7, "unowned", Color.magenta);
+        createPropertyField(8, "unowned", Color.magenta);
+        createChanceField(9);
+        createPropertyField(10, "unowned", Color.orange);
+        createPropertyField(11, "unowned", Color.orange);
+        createStartField(12);
+        createPropertyField(13, "unowned", Color.red);
+        createPropertyField(14, "unowned", Color.red);
+        createChanceField(15);
+        createPropertyField(16, "unowned", Color.yellow);
+        createPropertyField(17, "unowned", Color.yellow);
+        createJailField(18);
+        createPropertyField(19, "unowned", Color.pink);
+        createPropertyField(20, "unowned", Color.pink);
+        createChanceField(21);
+        createPropertyField(22, "unowned", Color.blue);
+        createPropertyField(23, "unowned", Color.blue);
     }
 
     private void addCarsToBoard()
@@ -119,26 +124,16 @@ public class GUI {
     public void displayDieRoll(int DieRoll1, int DieRoll2) {
         gui.setDice(DieRoll1, DieRoll2);
     }
-    /* public void moveCarToField(Player currentPlayer){
-        if(currentPlayer.getTurnOrderId() == 1) {
-            player1.getCar().setPosition(fields[currentPlayer.getField]);
-            }
-        if(currentPlayer.getTurnOrderId() == 2) {
-            player2.getCar().setPosition(fields[currentPlayer.getField]);
-        }
-        if(currentPlayer.getTurnOrderId() == 3) {
-            player3.getCar().setPosition(fields[currentPlayer.getField]);
-        }
-        if(currentPlayer.getTurnOrderId() == 4) {
-            player4.getCar().setPosition(fields[currentPlayer.getField]);
-        }
+
+    public void moveCarToField(int indexOfCurrentPlayer){
+            this.gui_players.get(indexOfCurrentPlayer).getCar().setPosition(fields[this.players.get(indexOfCurrentPlayer).getPosition()]);
     }
-     */
+
     public void displayPlayerBalance() {
-        this.player1.setBalance(balance1);
-        this.player2.setBalance(balance2);
-        this.player3.setBalance(balance3);
-        this.player4.setBalance(balance4);
+        for (int i = 0; i < this.players.size(); i++)
+        {
+            this.gui_players.get(i).setBalance(this.players.get(i).getBalance());
+        }
     }
     public String displayRollDiceButton(){
         return this.gui.getUserButtonPressed("", "Roll dice");

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class GameController
 {
     private Die die;
-    private int currentDiceRoll = 0;
+    private int currentDiceRollSum = 0;
     private GameBoard gameBoard;
     private Deck deck;
     private ArrayList<Player> players;
@@ -30,7 +30,7 @@ public class GameController
     {
         for (int i = 1; i <= numberOfPlayers; i++)
         {
-            this.players.add(new Player());
+            this.players.add(new Player(i));
         }
         for (Player i : this.players) {
             i.setPosition(0);
@@ -53,9 +53,12 @@ public class GameController
         while(!foundLoser())
         {
             getUserInputToBegin();
-            rollDice();
+            int[] diceRoll = rollDice();
+            this.gui.displayDieRoll(diceRoll[0], diceRoll[1]);
             movePlayer();
+            this.gui.moveCarToField(indexOfCurrentPlayer);
             evaluateFieldAndExecute();
+            this.gui.displayPlayerBalance();
             setNextPlayer();
         }
         Player winner = getMostWealthy();
@@ -63,9 +66,11 @@ public class GameController
     }
 
 
-    private void rollDice()
+    private int[] rollDice()
     {
-        this.currentDiceRoll = this.die.roll() + this.die.roll();
+        int[] diceRoll = {this.die.roll(), this.die.roll()};
+        this.currentDiceRollSum = diceRoll[0] + diceRoll[1];
+        return diceRoll;
     }
 
     private void setNextPlayer()
@@ -83,17 +88,17 @@ public class GameController
 
         if (hasReachedStartField())
         {
-            getCurrentPlayer().setPosition(currentPosition + this.currentDiceRoll - this.gameBoard.getFieldList().length);
+            getCurrentPlayer().setPosition(currentPosition + this.currentDiceRollSum - this.gameBoard.getFieldList().length);
         }
         else
         {
-            getCurrentPlayer().setPosition(currentPosition + this.currentDiceRoll);
+            getCurrentPlayer().setPosition(currentPosition + this.currentDiceRollSum);
         }
     }
 
     private boolean hasReachedStartField()
     {
-        return getCurrentPlayer().getPosition() + this.currentDiceRoll >= this.gameBoard.getFieldList().length;
+        return getCurrentPlayer().getPosition() + this.currentDiceRollSum >= this.gameBoard.getFieldList().length;
     }
 
     private void evaluateFieldAndExecute()
