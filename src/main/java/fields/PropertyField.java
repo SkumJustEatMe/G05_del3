@@ -1,6 +1,5 @@
 package fields;
 
-import fields.Field;
 import game.Player;
 
 import java.awt.*;
@@ -24,5 +23,5 @@ public class PropertyField extends Field {
         this.color = color;
     }
 
-    public boolean isOwned() { return this.owner != null; }
+    public boolean hasOwner() { return this.owner != null; }
 }

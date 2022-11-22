@@ -2,11 +2,12 @@ package fields;
 
 public class EventField extends Field
 {
-    FieldEvent effect;
+    private FieldEvent event;
+    public FieldEvent getFieldEvent() { return this.event; }
 
-    public EventField(String name, FieldEvent effect){
+    public EventField(String name, FieldEvent event){
         super(name);
-        this.effect = effect;
+        this.event = event;
     }
 }
 

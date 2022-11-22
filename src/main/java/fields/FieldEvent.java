@@ -1,6 +1,6 @@
 package fields;
 
-enum FieldEvent {
+public enum FieldEvent {
     Chance,
     GoToJail
 }

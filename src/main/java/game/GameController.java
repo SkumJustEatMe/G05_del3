@@ -10,6 +10,7 @@ public class GameController
     private int currentDiceRoll = 0;
     private GameBoard gameBoard;
     private ArrayList<Player> players;
+    private Player getCurrentPlayer() { return this.players.get(indexOfCurrentPlayer); }
     private int indexOfCurrentPlayer;
     private GUI gui;
 
@@ -74,33 +75,49 @@ public class GameController
     }
     private void movePlayer()
     {
-        int currentPosition = this.players.get(this.indexOfCurrentPlayer).getPosition();
+        int currentPosition = getCurrentPlayer().getPosition();
 
         if (hasReachedStartField())
         {
-            this.players.get(this.indexOfCurrentPlayer).setPosition(currentPosition + this.currentDiceRoll - this.gameBoard.getFieldList().length);
+            getCurrentPlayer().setPosition(currentPosition + this.currentDiceRoll - this.gameBoard.getFieldList().length);
         }
         else
         {
-            this.players.get(this.indexOfCurrentPlayer).setPosition(currentPosition + this.currentDiceRoll);
+            getCurrentPlayer().setPosition(currentPosition + this.currentDiceRoll);
         }
     }
 
     private boolean hasReachedStartField()
     {
-        return this.players.get(this.indexOfCurrentPlayer).getPosition() + this.currentDiceRoll >= this.gameBoard.getFieldList().length;
+        return getCurrentPlayer().getPosition() + this.currentDiceRoll >= this.gameBoard.getFieldList().length;
     }
 
     private void evaluateFieldAndExecute()
     {
-        String fieldType = this.gameBoard.getFieldList()[this.players.get(indexOfCurrentPlayer).getPosition()].getClass().getTypeName();
-        if (fieldType.equals("PropertyField"))
+        Field field = this.gameBoard.getFieldList()[getCurrentPlayer().getPosition()];
+        if (field instanceof PropertyField propertyField)
         {
-            if ((PropertyField) this.gameBoard.getFieldList()[this.players.get(indexOfCurrentPlayer).getPosition()].)
-        }
-        else if (fieldType.equals("EventField"))
-        {
+            getCurrentPlayer().changeBalance(-propertyField.getValue());
 
+            if (propertyField.hasOwner())
+            {
+                propertyField.getOwner().changeBalance(propertyField.getValue());
+            }
+            else
+            {
+                propertyField.setOwner(getCurrentPlayer());
+            }
+        }
+        else if (field instanceof EventField eventField)
+        {
+            if (eventField.getFieldEvent() == FieldEvent.Chance)
+            {
+
+            }
+            else if (eventField.getFieldEvent() == FieldEvent.GoToJail)
+            {
+
+            }
         }
     }
 }
