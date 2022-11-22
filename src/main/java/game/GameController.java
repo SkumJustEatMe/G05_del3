@@ -1,5 +1,6 @@
 package game;
 
+import chancecards.*;
 import fields.*;
 
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ public class GameController
     private Die die;
     private int currentDiceRoll = 0;
     private GameBoard gameBoard;
+    private Deck deck;
     private ArrayList<Player> players;
     private Player getCurrentPlayer() { return this.players.get(indexOfCurrentPlayer); }
     private int indexOfCurrentPlayer;
@@ -18,6 +20,7 @@ public class GameController
     {
         this.die = new Die();
         this.gameBoard = new GameBoard();
+        this.deck = new Deck();
         this.players = new ArrayList<Player>();
         this.addPlayers(4);
         for (Player i : this.players) {
@@ -112,11 +115,11 @@ public class GameController
         {
             if (eventField.getFieldEvent() == FieldEvent.Chance)
             {
-
+                // draw a card
             }
             else if (eventField.getFieldEvent() == FieldEvent.GoToJail)
             {
-
+                getCurrentPlayer().setPosition(this.gameBoard.getIndexOfGoToJail());
             }
         }
     }

@@ -1,7 +1,9 @@
 package fields;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.stream.IntStream;
 
 public class GameBoard {
 
@@ -28,6 +30,18 @@ public class GameBoard {
             new PropertyField("Bowlinghallen", 4, Color.green),
             new PropertyField("Zoo", 4, Color.green),
     };
+
+    public int getIndexOfGoToJail() {
+        int index = 0;
+        for (Field field : FieldList)
+        {
+            if (field instanceof EventField eventField && eventField.getFieldEvent() == FieldEvent.GoToJail) {
+                break;
+            }
+            index++;
+        }
+        return index;
+    }
     public Field[] getFieldList() { return Arrays.copyOf(this.FieldList, this.FieldList.length); }
 
 
