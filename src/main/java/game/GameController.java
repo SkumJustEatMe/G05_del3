@@ -22,19 +22,18 @@ public class GameController
         this.gameBoard = new GameBoard();
         this.deck = new Deck();
         this.players = new ArrayList<Player>();
-        this.addPlayers(4);
-        for (Player i : this.players) {
-            i.setPosition(0);
-        }
         this.indexOfCurrentPlayer = 0;
         this.gui = new GUI();
     }
 
-    private void addPlayers(int numberOfPlayers)
+    private void addPlayersAndSetPosition(int numberOfPlayers)
     {
         for (int i = 1; i <= numberOfPlayers; i++)
         {
             this.players.add(new Player());
+        }
+        for (Player i : this.players) {
+            i.setPosition(0);
         }
     }
 
@@ -46,13 +45,14 @@ public class GameController
 
     private void initialize()
     {
-        // initialize gui if needed
+        this.addPlayersAndSetPosition(this.getNumberOfPlayers());
     }
 
     private void startGameLoop()
     {
         while(!foundLoser())
         {
+            getUserInputToBegin();
             rollDice();
             movePlayer();
             evaluateFieldAndExecute();
@@ -158,5 +158,14 @@ public class GameController
             }
         }
         return mostWealthy;
+    }
+    private int getNumberOfPlayers() {
+        return Integer.parseInt(this.gui.displayPlayerSelectionButtons());
+    }
+
+    private void getUserInputToBegin() {
+        if (this.gui.displayRollDiceButton().equals("Roll dice")) {
+            return;
+        }
     }
 }

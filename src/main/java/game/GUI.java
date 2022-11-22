@@ -161,13 +161,12 @@ public class GUI {
         this.player3.setBalance(balance3);
         this.player4.setBalance(balance4);
     }
-    public void displayButton(boolean owned){
-        if (owned == false){
-            String buyButton = gui.getUserButtonPressed("", "Roll Dice", "Buy land");
-        }
-        else {
-            String buyButton = gui.getUserButtonPressed("", "Roll Dice");
-        }
+    public String displayRollDiceButton(){
+        return this.gui.getUserButtonPressed("", "Roll dice");
     }
 
+    public String displayPlayerSelectionButtons()
+    {
+        return gui.getUserButtonPressed("Select number of players:", "1 Player", "2 Players", "3 Players", "4 Players");
+    }
 }
