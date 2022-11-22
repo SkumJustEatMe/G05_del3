@@ -100,27 +100,37 @@ public class GameController
         Field field = this.gameBoard.getFieldList()[getCurrentPlayer().getPosition()];
         if (field instanceof PropertyField propertyField)
         {
-            getCurrentPlayer().changeBalance(-propertyField.getValue());
-
-            if (propertyField.hasOwner())
-            {
-                propertyField.getOwner().changeBalance(propertyField.getValue());
-            }
-            else
-            {
-                propertyField.setOwner(getCurrentPlayer());
-            }
+            executePropertyField(propertyField);
         }
         else if (field instanceof EventField eventField)
         {
-            if (eventField.getFieldEvent() == FieldEvent.Chance)
-            {
-                // draw a card
-            }
-            else if (eventField.getFieldEvent() == FieldEvent.GoToJail)
-            {
-                getCurrentPlayer().setPosition(this.gameBoard.getIndexOfGoToJail());
-            }
+            executeEventField(eventField);
+        }
+    }
+
+    private void executePropertyField(PropertyField propertyField)
+    {
+        getCurrentPlayer().changeBalance(-propertyField.getValue());
+
+        if (propertyField.hasOwner())
+        {
+            propertyField.getOwner().changeBalance(propertyField.getValue());
+        }
+        else
+        {
+            propertyField.setOwner(getCurrentPlayer());
+        }
+    }
+
+    private void executeEventField(EventField eventField)
+    {
+        if (eventField.getFieldEvent() == FieldEvent.Chance)
+        {
+            // draw a card
+        }
+        else if (eventField.getFieldEvent() == FieldEvent.GoToJail)
+        {
+            getCurrentPlayer().setPosition(this.gameBoard.getIndexOfGoToJail());
         }
     }
 }
