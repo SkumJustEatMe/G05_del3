@@ -4,8 +4,13 @@ import chancecards.*;
 
 public class Deck {
     private ChanceCard[] cards = new ChanceCard[20];
+    public ChanceCard getCard()
+    {
+        return this.cards[(int) (Math.random() * 20 - 1)];
+    }
 
-    public Deck(){
+    public Deck()
+    {
         this.cards[0] = new FreeFieldCard("Gratis Felt!\nRyk frem til et orange felt.\n"+
                 "Hvis det er ledigt får du det GRATIS!\n"+
                 "Ellers skal du BETALE leje til ejeren.", "Orange", null);
