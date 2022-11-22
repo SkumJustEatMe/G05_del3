@@ -16,7 +16,7 @@ public class PropertyField extends Field {
     public Player getOwner() { return this.owner;}
     public void setOwner(Player owner) {this.owner = owner;}
 
-    PropertyField(String name, int value, Color color)
+    public PropertyField(String name, int value, Color color)
     {
         super(name);
         this.value = value;

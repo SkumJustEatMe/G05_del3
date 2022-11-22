@@ -3,6 +3,7 @@ package game;
 import fields.*;
 
 import java.util.ArrayList;
+import java.util.Currency;
 
 public class GameController
 {
@@ -50,9 +51,9 @@ public class GameController
         this.gui.addCarsToBoard();
     }
 
-    private void startGameLoop()
+    public void startGameLoop()
     {
-        while(!foundLoser())
+        while(!foundLoser(this.players))
         {
             getUserInputToBegin();
             rollDice();
@@ -108,7 +109,7 @@ public class GameController
         Field field = this.gameBoard.getFieldList()[getCurrentPlayer().getPosition()];
         if (field instanceof PropertyField propertyField)
         {
-            executePropertyField(propertyField);
+            executePropertyField(propertyField, getCurrentPlayer());
         }
         // else if (field instanceof EventField eventField)
         // {
@@ -116,9 +117,9 @@ public class GameController
         // }
     }
 
-    private void executePropertyField(PropertyField propertyField)
+    public void executePropertyField(PropertyField propertyField, Player currentPlayer)
     {
-        getCurrentPlayer().changeBalance(-propertyField.getValue());
+        currentPlayer.changeBalance(-propertyField.getValue());
 
         if (propertyField.hasOwner())
         {
@@ -126,7 +127,7 @@ public class GameController
         }
         else
         {
-            propertyField.setOwner(getCurrentPlayer());
+            propertyField.setOwner(currentPlayer);
         }
     }
 
@@ -142,11 +143,11 @@ public class GameController
 //        }
 //    }
 
-    private boolean foundLoser()
+    public boolean foundLoser(ArrayList<Player> players)
     {
-        for (Player player : this.players)
+        for (Player player : players)
         {
-            if (player.getBalance() == 0) {
+            if (player.getBalance() < 0) {
                 return true;
             }
         }
