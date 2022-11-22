@@ -26,9 +26,9 @@ public class GameBoard {
             new EventField("Gå i fængsel", FieldEvent.GoToJail),
             new PropertyField("Bowlinghallen", 4, Color.green),
             new PropertyField("Zoo", 4, Color.green),
-
-
     };
+    public Field[] getFieldList() { return this.FieldList; }
+
 
 
     public GameBoard()

@@ -50,13 +50,14 @@ public class GameController
         while(true)
         {
             rollDice();
-            // move player
+            movePlayer();
             evaluateField();
             // execute field effect
             // update player properties
             setNextPlayer();
         }
     }
+
 
     private void rollDice()
     {
@@ -71,6 +72,24 @@ public class GameController
         else {
             this.indexOfCurrentPlayer = 0;
         }
+    }
+    private void movePlayer()
+    {
+        int currentPosition = this.players.get(this.indexOfCurrentPlayer).getPosition();
+
+        if (hasReachedStartField())
+        {
+            this.players.get(this.indexOfCurrentPlayer).setPosition(currentPosition + this.currentDiceRoll - this.gameBoard.getFieldList().length);
+        }
+        else
+        {
+            this.players.get(this.indexOfCurrentPlayer).setPosition(currentPosition + this.currentDiceRoll);
+        }
+    }
+
+    private boolean hasReachedStartField()
+    {
+        return this.players.get(this.indexOfCurrentPlayer).getPosition() + this.currentDiceRoll >= this.gameBoard.getFieldList().length;
     }
 
     private void evaluateField()
