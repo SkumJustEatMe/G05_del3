@@ -144,13 +144,28 @@ public class GUI {
 
     public String displayPlayerSelectionButtons()
     {
-        var result = this.gui.getUserButtonPressed("Select number of players:", "2 Players", "3 Players", "4 Players");
-        return result;
+        return this.gui.getUserButtonPressed("Select number of players:", "2 Players", "3 Players", "4 Players");
     }
 
     public void displayWinnerAndExit(Player player)
     {
         this.gui.getUserButtonPressed(String.format("Congratulations %1$s, you've won!", player.getName()), "Exit");
         System.exit(0);
+    }
+    public void refreshOwnership()
+    {
+        for (int i = 0; i < this.gameBoard.getFieldList().length; i++)
+        {
+            if (this.gui.getFields()[i] instanceof GUI_Street gui_field && this.gameBoard.getFieldList()[i] instanceof PropertyField field)
+            {
+                if (field.hasOwner())
+                {
+                    gui_field.setOwnerName(field.getOwner().getName());
+                }
+                else {
+                    gui_field.setOwnerName("unowned");
+                }
+            }
+        }
     }
 }

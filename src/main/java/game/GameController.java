@@ -60,6 +60,7 @@ public class GameController
             movePlayer();
             this.gui.moveCarToField(indexOfCurrentPlayer);
             evaluateFieldAndExecute();
+            this.gui.refreshOwnership();
             this.gui.displayPlayerBalance();
             setNextPlayer();
         }
@@ -91,6 +92,7 @@ public class GameController
         if (hasReachedStartField())
         {
             getCurrentPlayer().setPosition(currentPosition + this.currentDiceRollSum - this.gameBoard.getFieldList().length);
+            getCurrentPlayer().changeBalance(2);
         }
         else
         {
