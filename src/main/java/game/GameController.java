@@ -40,25 +40,26 @@ public class GameController
 
     public void run()
     {
-        this.initiatlize();
+        this.initialize();
         this.startGameLoop();
     }
 
-    private void initiatlize()
+    private void initialize()
     {
         // initialize gui if needed
     }
 
     private void startGameLoop()
     {
-        while(true)
+        while(!foundLoser())
         {
             rollDice();
             movePlayer();
             evaluateFieldAndExecute();
-            // update player properties
             setNextPlayer();
         }
+        Player winner = getMostWealthy();
+        // display winner and quit
     }
 
 
@@ -126,11 +127,36 @@ public class GameController
     {
         if (eventField.getFieldEvent() == FieldEvent.Chance)
         {
-            // draw a card
+            this.deck.getCard().execute(getCurrentPlayer());
         }
         else if (eventField.getFieldEvent() == FieldEvent.GoToJail)
         {
             getCurrentPlayer().setPosition(this.gameBoard.getIndexOfGoToJail());
         }
+    }
+
+    private boolean foundLoser()
+    {
+        for (Player player : this.players)
+        {
+            if (player.getBalance() == 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private Player getMostWealthy()
+    {
+        // in case of a draw, winner is decided by turn order
+        Player mostWealthy = this.players.get(0);
+        for (int i = 1; i < this.players.size(); i++)
+        {
+            if (this.players.get(i).getBalance() > mostWealthy.getBalance())
+            {
+                mostWealthy = this.players.get(i);
+            }
+        }
+        return mostWealthy;
     }
 }
