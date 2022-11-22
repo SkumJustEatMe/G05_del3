@@ -1,6 +1,6 @@
 package game;
 
-import fields.GameBoard;
+import fields.*;
 
 import java.util.ArrayList;
 
@@ -51,8 +51,7 @@ public class GameController
         {
             rollDice();
             movePlayer();
-            evaluateField();
-            // execute field effect
+            evaluateFieldAndExecute();
             // update player properties
             setNextPlayer();
         }
@@ -92,8 +91,16 @@ public class GameController
         return this.players.get(this.indexOfCurrentPlayer).getPosition() + this.currentDiceRoll >= this.gameBoard.getFieldList().length;
     }
 
-    private void evaluateField()
+    private void evaluateFieldAndExecute()
     {
+        String fieldType = this.gameBoard.getFieldList()[this.players.get(indexOfCurrentPlayer).getPosition()].getClass().getTypeName();
+        if (fieldType.equals("PropertyField"))
+        {
+            if ((PropertyField) this.gameBoard.getFieldList()[this.players.get(indexOfCurrentPlayer).getPosition()].)
+        }
+        else if (fieldType.equals("EventField"))
+        {
 
+        }
     }
 }

@@ -8,13 +8,13 @@ import java.awt.*;
 public class PropertyField extends Field {
 
     private final int value;
-    public int getValue() {return this.value;}
+    public int getValue() { return this.value;}
 
     private final Color color;
-    public Color getColor() {return this.color;}
+    public Color getColor() { return this.color;}
 
     private Player owner;
-    public Player getOwner() {return this.owner;}
+    public Player getOwner() { return this.owner;}
     public void setOwner(Player owner) {this.owner = owner;}
 
     PropertyField(String name, int value, Color color)
@@ -24,5 +24,5 @@ public class PropertyField extends Field {
         this.color = color;
     }
 
-    public boolean isOwned() {return this.owner != null; }
+    public boolean isOwned() { return this.owner != null; }
 }

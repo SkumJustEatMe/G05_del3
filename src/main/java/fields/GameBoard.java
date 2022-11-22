@@ -1,6 +1,7 @@
 package fields;
 
 import java.awt.*;
+import java.util.Arrays;
 
 public class GameBoard {
 
@@ -27,7 +28,7 @@ public class GameBoard {
             new PropertyField("Bowlinghallen", 4, Color.green),
             new PropertyField("Zoo", 4, Color.green),
     };
-    public Field[] getFieldList() { return this.FieldList; }
+    public Field[] getFieldList() { return Arrays.copyOf(this.FieldList, this.FieldList.length); }
 
 
 
