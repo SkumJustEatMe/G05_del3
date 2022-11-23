@@ -4,13 +4,13 @@
 'autonumber
 participant ":GameController"
 participant ":GUI"
-participant Die
-participant Player
-participant GameBoard
-participant PropertyField
-participant Deck
-participant Card
-participant Board
+participant ":Die"
+participant ":Player"
+participant ":GameBoard"
+participant ":PropertyField"
+participant ":Deck"
+participant ":Card"
+participant ":Board"
 
 loop no loser
 
@@ -19,44 +19,44 @@ loop no loser
 ":GUI" --> ":GameController": returnsUserInputToBegin
 
 'int[] diceRoll = rollDice();
-":GameController" -> Die: rollDie
-Die --> ":GameController": returnDieRoll
+":GameController" -> ":Die": rollDie
+":Die" --> ":GameController": returnDieRoll
 
 'this.gui.displayDieRoll(diceRoll[0], diceRoll[1]);
 ":GameController" -> ":GUI": displayDiceRoll
 
 'movePlayer();
-":GameController" -> Player: getPosition
-Player --> ":GameController": returnPosition
-":GameController" -> Player: setPosition
+":GameController" -> ":Player": getPosition
+":Player" --> ":GameController": returnPosition
+":GameController" -> ":Player": setPosition
 
 'this.gui.moveCarToField(indexOfCurrentPlayer);
 ":GameController" -> ":GUI": moveCarToField
 
 'evaluateFieldAndExecute();
-":GameController" -> GameBoard: getFieldList
-GameBoard --> ":GameController": returnFieldList
+":GameController" -> ":GameBoard": getFieldList
+":GameBoard" --> ":GameController": returnFieldList
 
-alt Field instanceof PropertyField
-":GameController" -> PropertyField: getBalanceChange
-PropertyField --> ":GameController": returnBalanceChange
-":GameController" -> Player: changeBalance
+alt Field instanceof ":PropertyField"
+":GameController" -> ":PropertyField": getBalanceChange
+":PropertyField" --> ":GameController": returnBalanceChange
+":GameController" -> ":Player": changeBalance
 alt PropertyField.hasOwner()
-":GameController" -> Player: changeBalance
+":GameController" -> ":Player": changeBalance
 else
-":GameController" -> PropertyField: setOwner
+":GameController" -> ":PropertyField": setOwner
 end
 end
 
 alt Field instanceof EventField
 alt eventField.getFieldEvent() == FieldEvent.Chance
-":GameController" -> Deck: getCard
-Deck --> ":GameController": returnCard
-":GameController" -> Card: executeCard
+":GameController" -> ":Deck": getCard
+":Deck" --> ":GameController": returnCard
+":GameController" -> ":Card": executeCard
 else eventField.getFieldEvent() == FieldEvent.GoToJail
-":GameController" -> Board: getIndexOfGoToJail
-Board --> ":GameController": returnIndexOfGoToJail
-":GameController" -> Player: setPosition
+":GameController" -> ":Board": getIndexOfGoToJail
+":Board" --> ":GameController": returnIndexOfGoToJail
+":GameController" -> ":Player": setPosition
 end
 end
 
@@ -76,8 +76,8 @@ end
 'Player winner = getMostWealthy();
 ":GameController" -> ":GameController": setMostWealthy
 loop every player except for player 1
-":GameController" -> Player: getBalance
-Player --> ":GameController": returnBalance
+":GameController" -> ":Player": getBalance
+":Player" --> ":GameController": returnBalance
 alt this.players.get(i).getBalance() > mostWealthy.getBalance()
 ":GameController" -> ":GameController": setMostWealthy
 end
