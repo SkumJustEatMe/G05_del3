@@ -29,7 +29,6 @@ class Gamecontroller{
 - getMostWealthy : Player
 - getNumberOfPlayers() : int
 - getUserInputToBegin : void
-
 }
 
 class Die{
@@ -156,11 +155,11 @@ Gamecontroller "1"--"1" Die : rolls
 Gamecontroller "1"--"1" Deck : picksCard
 Deck "1"--"0..20" ChanceCard : contains
 Gamecontroller "1"--"2..4" Player : movesAndChangeBalance
-FieldEvent "1" -- "1" Field : reads
+FieldEvent "1" -- "1" EventField : reads
 GUI"1" -- "1"Gamecontroller : sendsInformation
 GameBoard "1" -- "24" Field : contains
-Field "1" <|-- "1" EventField : isA
 Field "1" <|-- "1" PropertyField : isA
+Field "1" <|-- "1" EventField : isA
 ChanceCard "20" <|-- "2" MoveCard : isA
 ChanceCard "20" <|-- "2" MoveToCard : isA
 ChanceCard "20" <|-- "1" BirthdayCard : isA
