@@ -1,0 +1,85 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+'autonumber
+participant ":GameController"
+participant ":GUI"
+participant Die
+participant Player
+participant GameBoard
+participant PropertyField
+participant Deck
+participant Card
+participant Board
+
+loop no loser
+
+'getUserInputToBegin();
+":GameController" -> ":GUI": getUserInputToBegin
+":GUI" --> ":GameController": returnsUserInputToBegin
+
+'int[] diceRoll = rollDice();
+":GameController" -> Die: rollDie
+Die --> ":GameController": returnDieRoll
+
+'this.gui.displayDieRoll(diceRoll[0], diceRoll[1]);
+":GameController" -> ":GUI": displayDiceRoll
+
+'movePlayer();
+":GameController" -> Player: getPosition
+Player --> ":GameController": returnPosition
+":GameController" -> Player: setPosition
+
+'this.gui.moveCarToField(indexOfCurrentPlayer);
+":GameController" -> ":GUI": moveCarToField
+
+'evaluateFieldAndExecute();
+":GameController" -> GameBoard: getFieldList
+GameBoard --> ":GameController": returnFieldList
+
+alt Field instanceof PropertyField
+":GameController" -> PropertyField: getBalanceChange
+PropertyField --> ":GameController": returnBalanceChange
+":GameController" -> Player: changeBalance
+alt PropertyField.hasOwner()
+":GameController" -> Player: changeBalance
+else
+":GameController" -> PropertyField: setOwner
+end
+end
+
+alt Field instanceof EventField
+alt eventField.getFieldEvent() == FieldEvent.Chance
+":GameController" -> Deck: getCard
+Deck --> ":GameController": returnCard
+":GameController" -> Card: executeCard
+else eventField.getFieldEvent() == FieldEvent.GoToJail
+":GameController" -> Board: getIndexOfGoToJail
+Board --> ":GameController": returnIndexOfGoToJail
+":GameController" -> Player: setPosition
+end
+end
+
+'this.gui.displayPlayerBalance();
+":GameController" -> ":GUI": displayPlayerBalance
+
+'setNextPlayer();
+alt this.indexOfCurrentPlayer + 1 < this.players.size()
+":GameController" -> ":GameController": increaseIndexOfCurrentPlayer
+else
+":GameController" -> ":GameController": resetIndexOfCurrentPlayer
+end
+
+''End of the "no loser" loop
+end
+
+'Player winner = getMostWealthy();
+":GameController" -> ":GameController": setMostWealthy
+loop every player except for player 1
+":GameController" -> Player: getBalance
+Player --> ":GameController": returnBalance
+alt this.players.get(i).getBalance() > mostWealthy.getBalance()
+":GameController" -> ":GameController": setMostWealthy
+end
+end
+@enduml
