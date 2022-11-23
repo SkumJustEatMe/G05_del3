@@ -73,21 +73,57 @@ class GUI{
 + refreshOwnership() void
 }
 
-abstract class ChanceCard{
-RandomCardEffect
+class Deck{
+- ChanceCard[]
 }
 
-class MoveCard{}
+abstract class ChanceCard{
++ execute(Player) : void
++ printText(): String
+}
 
-class MoveToCard{}
+class BirthdayCard{
++ execute(Player) : void (override)
+- text : String
+- amount : int
+}
 
-class FreeFieldCard{}
+class MoveCard{
++ execute(Player) : void (override)
+text : String
+amount : int
+}
 
-class GiveCardCard{}
+class MoveToCard{
++ execute(Player) : void (override)
+text: String
+value : int
+}
 
-class RecieveOrPayCard{}
+class FreeFieldCard{
+ text : String
+ color : String
+ color2 : String
++ execute(Player, Board) : void (override)
+}
 
-class GetOutOfJailCard{}
+class GiveCardCard{
+text : String
+name : String
+- buyNextFieldActivated() : void
++ execute(Player, Board) : void (override)
+}
+
+class RecieveOrPayCard{
++ execute(Player) : void (override)
+text : String
+amount : int
+}
+
+class GetOutOfJailCard{
++ execute(Player) : void (override)
+ text : String
+}
 
 
 class Field{
@@ -114,16 +150,23 @@ enum FieldEvent{
 Chance
 GoToJail
 }
-
+main "1" -- "1" Gamecontroller : runs
 Gamecontroller "1"--"1" GameBoard : evaluates
+Gamecontroller "1"--"1" Die : rolls
+Gamecontroller "1"--"1" Deck : picksCard
+Deck "1"--"0..20" ChanceCard : contains
+Gamecontroller "1"--"2..4" Player : movesAndChangeBalance
+FieldEvent "1" -- "1" Field : reads
 GUI"1" -- "1"Gamecontroller : sendsInformation
 GameBoard "1" -- "24" Field : contains
 Field "1" <|-- "1" EventField : isA
 Field "1" <|-- "1" PropertyField : isA
-ChanceCard "20" <|-- "4" MoveCard : isA
+ChanceCard "20" <|-- "2" MoveCard : isA
+ChanceCard "20" <|-- "2" MoveToCard : isA
+ChanceCard "20" <|-- "1" BirthdayCard : isA
 ChanceCard "20" <|-- "8" FreeFieldCard : isA
 ChanceCard "20" <|-- "4" GiveCardCard : isA
-ChanceCard "20" <|-- "3" RecieveOrPayCard : isA
+ChanceCard "20" <|-- "2" RecieveOrPayCard : isA
 ChanceCard "20" <|-- "1" GetOutOfJailCard : isA
 
 @enduml
