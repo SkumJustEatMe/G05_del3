@@ -4,31 +4,34 @@ skinparam classAttributeIconSize 0
 
 class Player{
 - balance : int
-- turnOrderId : int
-+ getTurnOrderId() : int
-+ setTurnOrderId() : void
-+ getBalance() : int
-+ changeBalance() : int
+- name : String
+- position : int
++ changeBalance(int) : void
 }
 class Gamecontroller{
-- currentDiceroll: int
+- indexOfCurrentPlayer : int
+- currentDieRoll : int
 - Player
 - Die
-+ startGameLoop()
-- printScore()
-- evaluateGameProgress()
--printWinnerAndExit()
--printFieldDescription()
--updatePlayerBalance()
--requestInputToStart()
--updateCurrentPlayer()
--rollDice()
+- GameBoard
+- ArrayList<Player>
+- GUI
+- initialize() : void
++ startGameLoop() : void
+- rollDice() : void
+- setNextPlayer() : void
+- movePlayer() : void
+- hasReachedStartField() : boolean
+- evaluateFieldAndExecute() : void
++ executePropertyField(PropertyField, Player) : void
+- executeEventField(EventField) : void
++ foundLoser(ArrayList<Player>) : boolean
+- getMostWealthy : Player
+- getNumberOfPlayers() : int
+- getUserInputToBegin : void
+
 }
-class Game{
-- Player
-- Die
-+ run()
-}
+
 class Die{
 - MAX : int
 - faceValue : int
@@ -36,20 +39,38 @@ class Die{
 +roll() : int
 +toString() : String
 }
-class Board{
-{static}+ getFieldDescription() : String
-{static}+ getFieldName() : String
-{static}+ getBalanceChange() : int
+class GameBoard{
+- Field[]
++ getIndexOfGoToJail() : int
++ getFieldList() : Field[]
 }
-class Main{
-+ main()
+
+class main{
+{static}+ main()
 }
 class GUI{
-+setFieldInformation() : void
-+displayDieRoll() :
-+displayPlayerBalance() :
-+addPlayerToBoard() :
-+moveCarToField() :
+- GUI
+- Gamecontroller
+- GameBoard
+- GUI_Field[]
+- ArrayList<GUI_Player>
+- Color[]
+- ArrayList<GUI_car>
++ createStartField(int) : void
++ createPropertyField(int, String, Color) : void
++ createChanceField(int) : void
++ createJailField(int) : void
++ createEmptyField(int) : void
++ populateFields() : void
++ addCarsToBoard() : void
++ addPlayersToBoard(int) : void
++ displayDieRoll(int) : void
++ moveCarToField(int) : void
++ displayPlayerBalance() : void
++ displayRollDiceButton(String) : String
++ displayPlayerSelectionButtons() : String
++ displayWinnerAndExit(Player) : void
++ refreshOwnership() void
 }
 
 abstract class ChanceCard{
@@ -57,6 +78,8 @@ RandomCardEffect
 }
 
 class MoveCard{}
+
+class MoveToCard{}
 
 class FreeFieldCard{}
 
@@ -66,39 +89,37 @@ class RecieveOrPayCard{}
 
 class GetOutOfJailCard{}
 
-class DiceCup{
-DiceValue
+
+class Field{
+- name : String
++ getName() : String
 }
 
-abstract class Field{}
+class PropertyField{
+- value : int
+- Color
+- Player
++ getValue() : int
++ getOwner() : Player
++ setOwner(Player) : void
++ hasOwner() : boolean
+}
 
-class JailField{}
+class EventField{
+- FieldEvent
++ getFieldEvent() : FieldEvent
+}
 
-class StartField{}
+enum FieldEvent{
+Chance
+GoToJail
+}
 
-class ChanceField{}
-
-class GoToJailField{}
-
-class ParkingField{}
-
-class BuyableField{}
-
-Die "2"--"1" DiceCup : contains
-DiceCup "1" -- "1" Game : contains
-Gamecontroller "1"--"1" Game : evaluates
-Gamecontroller "1"--"1" Board : evaluates
-Game "1"--"1" Main : runs
-Player "2"--"1" Game : contains
+Gamecontroller "1"--"1" GameBoard : evaluates
 GUI"1" -- "1"Gamecontroller : sendsInformation
-Board "1" -- "24" Field : contains
-Game "1" -- "20" ChanceCard : contains
-Field "1" <|-- "1" JailField : isA
-Field "1" <|-- "1" StartField : isA
-Field "1" <|-- "1" ChanceField : isA
-Field "1" <|-- "1" GoToJailField : isA
-Field "1" <|-- "1" ParkingField : isA
-Field "1" <|-- "1" BuyableField : isA
+GameBoard "1" -- "24" Field : contains
+Field "1" <|-- "1" EventField : isA
+Field "1" <|-- "1" PropertyField : isA
 ChanceCard "20" <|-- "4" MoveCard : isA
 ChanceCard "20" <|-- "8" FreeFieldCard : isA
 ChanceCard "20" <|-- "4" GiveCardCard : isA
