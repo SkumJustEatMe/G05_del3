@@ -1,5 +1,6 @@
 package game;
 
+import chancecards.*;
 import fields.*;
 
 import java.util.ArrayList;
@@ -7,10 +8,17 @@ import java.util.ArrayList;
 public class GameController
 {
     private Die die;
+<<<<<<< Updated upstream
     private int currentDiceRollSum = 0;
+=======
+    private Deck deck;
+    private int currentDieRoll = 0;
+>>>>>>> Stashed changes
     private GameBoard gameBoard;
     // private Deck deck;
     private ArrayList<Player> players;
+    private RecieveOrPayCard ;
+
     public ArrayList<Player> getPlayers() { return this.players; }
     private Player getCurrentPlayer() { return this.players.get(indexOfCurrentPlayer); }
     private int indexOfCurrentPlayer;
@@ -20,7 +28,7 @@ public class GameController
     {
         this.die = new Die();
         this.gameBoard = new GameBoard();
-        //this.deck = new Deck();
+        this.deck = new Deck();
         this.players = new ArrayList<Player>();
         this.indexOfCurrentPlayer = 0;
         this.gui = new GUI(this.gameBoard, this);
@@ -112,10 +120,10 @@ public class GameController
         {
             executePropertyField(propertyField);
         }
-        // else if (field instanceof EventField eventField)
-        // {
-        //     executeEventField(eventField);
-        // }
+         else if (field instanceof EventField eventField)
+         {
+             executeEventField(eventField);
+         }
     }
 
     private void executePropertyField(PropertyField propertyField)
@@ -132,17 +140,36 @@ public class GameController
         }
     }
 
-//    private void executeEventField(EventField eventField)
-//    {
-//        if (eventField.getFieldEvent() == FieldEvent.Chance)
-//        {
-//            this.deck.getCard().execute(getCurrentPlayer());
-//        }
-//        else if (eventField.getFieldEvent() == FieldEvent.GoToJail)
-//        {
-//            getCurrentPlayer().setPosition(this.gameBoard.getIndexOfGoToJail());
-//        }
-//    }
+    private void executeEventField(EventField eventField)
+    {
+       if (eventField.getFieldEvent() == FieldEvent.Chance) {
+           var card = this.deck.getCard();
+           if(card instanceof GiveCardCard giveCardCard) {
+               giveCardCard.execute(getCurrentPlayer(), this.gameBoard);
+           }
+           else if(card instanceof FreeFieldCard fieldCard){
+               fieldCard.execute(getCurrentPlayer(),this.gameBoard);
+           }
+           else if(card instanceof BirthdayCard birthdayCard){
+           birthdayCard.execute(players, indexOfCurrentPlayer);
+           }
+           else if (card instanceof GetOutOfJailCard getOutOfJailCard){
+           getOutOfJailCard.execute(getCurrentPlayer());
+           }
+           else if (card instanceof MoveCard moveCard){
+           moveCard.execute(getCurrentPlayer());
+           }
+           else if (card instanceof MoveToCard moveToCard) {
+           moveToCard.execute(getCurrentPlayer());
+           }
+           else if(card instanceof RecieveOrPayCard recieveOrPayCard){
+           recieveOrPayCard.execute(getCurrentPlayer());
+           }
+       }
+       else if (eventField.getFieldEvent() == FieldEvent.GoToJail) {
+            getCurrentPlayer().setPosition(this.gameBoard.getIndexOfGoToJail());
+        }
+   }
 
     private boolean foundLoser()
     {
