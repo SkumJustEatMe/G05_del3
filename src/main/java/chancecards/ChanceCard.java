@@ -11,7 +11,5 @@ public abstract class ChanceCard {
     public String printText(){
         return null;
     }
-
-    
 }
 

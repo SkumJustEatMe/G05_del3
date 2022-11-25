@@ -1,22 +1,24 @@
 package chancecards;
 
-import chancecards.ChanceCard;
+import fields.GameBoard;
 import game.Player;
 
 public class MoveCard extends ChanceCard {
     String text;
     int amount;
-    MoveCard(String text, int value){
+
+    MoveCard(String text, int amount){
+
         this.text = text;
         this.amount = amount;
     }
 
-    public void execute(Player p){
-        int spot;
-        spot = p.curSqr;
-        p.curSqr() = p.curSqr() + p.move(amount);
-        if(spot > p.curSqr){
-            p.changeBalance(200);
+    public void execute(Player p, GameBoard gameBoard){
+        if(p.getPosition() + amount > gameBoard.getFieldList().length){
+            p.setPosition(p.getPosition() + amount - 24);
+            p.changeBalance(2);
+        } else {
+            p.setPosition(p.getPosition()+amount);
         }
     }
 

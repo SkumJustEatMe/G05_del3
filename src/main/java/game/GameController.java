@@ -8,10 +8,12 @@ import java.util.ArrayList;
 public class GameController
 {
     private Die die;
-    private int currentDiceRollSum = 0;
-    private GameBoard gameBoard;
+    private int currentDieRoll = 0;
     private Deck deck;
+    private GameBoard gameBoard;
     private ArrayList<Player> players;
+
+    public ArrayList<Player> getPlayers() { return this.players; }
     private Player getCurrentPlayer() { return this.players.get(indexOfCurrentPlayer); }
     private int indexOfCurrentPlayer;
     private GUI gui;
@@ -23,14 +25,14 @@ public class GameController
         this.deck = new Deck();
         this.players = new ArrayList<Player>();
         this.indexOfCurrentPlayer = 0;
-        this.gui = new GUI(this.gameBoard, this.players);
+        this.gui = new GUI(this.gameBoard, this);
     }
 
     private void addPlayersAndSetPosition(int numberOfPlayers)
     {
         for (int i = 1; i <= numberOfPlayers; i++)
         {
-            this.players.add(new Player(i));
+            this.players.add(new Player(i, 20));
         }
         for (Player i : this.players) {
             i.setPosition(0);
@@ -46,6 +48,8 @@ public class GameController
     private void initialize()
     {
         this.addPlayersAndSetPosition(this.getNumberOfPlayers());
+        this.gui.addPlayersToBoard(this.players.size());
+        this.gui.addCarsToBoard();
     }
 
     private void startGameLoop()
@@ -53,24 +57,24 @@ public class GameController
         while(!foundLoser())
         {
             getUserInputToBegin();
-            int[] diceRoll = rollDice();
-            this.gui.displayDieRoll(diceRoll[0], diceRoll[1]);
+            rollDice();
+            this.gui.displayDieRoll(this.currentDieRoll);
             movePlayer();
             this.gui.moveCarToField(indexOfCurrentPlayer);
             evaluateFieldAndExecute();
+            this.gui.moveCarToField(indexOfCurrentPlayer);
+            this.gui.refreshOwnership();
             this.gui.displayPlayerBalance();
             setNextPlayer();
         }
         Player winner = getMostWealthy();
-        // display winner and quit
+        this.gui.displayWinnerAndExit(winner);
     }
 
 
-    private int[] rollDice()
+    private void rollDice()
     {
-        int[] diceRoll = {this.die.roll(), this.die.roll()};
-        this.currentDiceRollSum = diceRoll[0] + diceRoll[1];
-        return diceRoll;
+        this.currentDieRoll = this.die.roll();
     }
 
     private void setNextPlayer()
@@ -88,17 +92,18 @@ public class GameController
 
         if (hasReachedStartField())
         {
-            getCurrentPlayer().setPosition(currentPosition + this.currentDiceRollSum - this.gameBoard.getFieldList().length);
+            getCurrentPlayer().setPosition(currentPosition + this.currentDieRoll - this.gameBoard.getFieldList().length);
+            getCurrentPlayer().changeBalance(2);
         }
         else
         {
-            getCurrentPlayer().setPosition(currentPosition + this.currentDiceRollSum);
+            getCurrentPlayer().setPosition(currentPosition + this.currentDieRoll);
         }
     }
 
     private boolean hasReachedStartField()
     {
-        return getCurrentPlayer().getPosition() + this.currentDiceRollSum >= this.gameBoard.getFieldList().length;
+        return getCurrentPlayer().getPosition() + this.currentDieRoll >= this.gameBoard.getFieldList().length;
     }
 
     private void evaluateFieldAndExecute()
@@ -108,6 +113,7 @@ public class GameController
         {
             executePropertyField(propertyField);
         }
+
         else if (field instanceof EventField eventField)
         {
             executeEventField(eventField);
@@ -130,15 +136,39 @@ public class GameController
 
     private void executeEventField(EventField eventField)
     {
-        if (eventField.getFieldEvent() == FieldEvent.Chance)
-        {
-            this.deck.getCard().execute(getCurrentPlayer());
-        }
-        else if (eventField.getFieldEvent() == FieldEvent.GoToJail)
-        {
+       if (eventField.getFieldEvent() == FieldEvent.Chance) {
+           var card = this.deck.getCard();
+           this.gui.displayChanceCard(card);
+           if(card instanceof FreeFieldCard fieldCard){
+               fieldCard.execute(getCurrentPlayer(),this.gameBoard);
+           }
+           else if(card instanceof BirthdayCard birthdayCard){
+           birthdayCard.execute(players, indexOfCurrentPlayer);
+           }
+           else if (card instanceof GetOutOfJailCard getOutOfJailCard){
+           getOutOfJailCard.execute(getCurrentPlayer());
+           }
+           else if (card instanceof MoveCard moveCard){
+           moveCard.execute(getCurrentPlayer());
+           }
+           else if (card instanceof MoveToCard moveToCard) {
+           moveToCard.execute(getCurrentPlayer());
+           }
+           else if(card instanceof RecieveOrPayCard recieveOrPayCard){
+           recieveOrPayCard.execute(getCurrentPlayer());
+           }
+       }
+       else if (eventField.getFieldEvent() == FieldEvent.GoToJail) {
             getCurrentPlayer().setPosition(this.gameBoard.getIndexOfGoToJail());
+            if (getCurrentPlayer().getGetOutOfJailCards() > 0)
+            {
+                getCurrentPlayer().addGetOutOfJailCards(-1);
+            }
+            else {
+                getCurrentPlayer().changeBalance(-2);
+            }
         }
-    }
+   }
 
     private boolean foundLoser()
     {
@@ -153,7 +183,6 @@ public class GameController
 
     private Player getMostWealthy()
     {
-        // in case of a draw, winner is decided by turn order
         Player mostWealthy = this.players.get(0);
         for (int i = 1; i < this.players.size(); i++)
         {
@@ -165,12 +194,14 @@ public class GameController
         return mostWealthy;
     }
     private int getNumberOfPlayers() {
-        return Integer.parseInt(this.gui.displayPlayerSelectionButtons());
+        String result = (this.gui.displayPlayerSelectionButtons());
+        return Integer.parseInt(String.valueOf(result.charAt(0)));
     }
 
     private void getUserInputToBegin() {
-        if (this.gui.displayRollDiceButton().equals("Roll dice")) {
+        if (this.gui.displayRollDiceButton(getCurrentPlayer().getName()).equals("Roll dice")) {
             return;
         }
     }
+
 }
