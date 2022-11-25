@@ -13,7 +13,6 @@ public class MoveToCard extends ChanceCard {
 
     public void execute(Player p){
         int spot;
-
         spot = p.getPosition();
         p.setPosition(value);
         if(spot > p.getPosition()){

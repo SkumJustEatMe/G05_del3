@@ -1,5 +1,6 @@
 package game;
 
+import chancecards.ChanceCard;
 import fields.*;
 import fields.GameBoard;
 import gui_fields.*;
@@ -144,6 +145,9 @@ public class GUI {
     public String displayPlayerSelectionButtons()
     {
         return this.gui.getUserButtonPressed("Select number of players:", "2 Players", "3 Players", "4 Players");
+    }
+    public void displayChanceCard(ChanceCard chanceCard){
+        this.gui.displayChanceCard(chanceCard.printText());
     }
 
     public void displayWinnerAndExit(Player player)

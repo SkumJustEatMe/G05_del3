@@ -24,9 +24,11 @@ public class FreeFieldCard extends ChanceCard {
                     p.setPosition(i);
                     if (!field.hasOwner()) {
                         field.setOwner(p);
+                        break;
                     } else {
                         p.changeBalance(-field.getValue());
                         field.getOwner().changeBalance(field.getValue());
+                        break;
                     }
                 }
             }

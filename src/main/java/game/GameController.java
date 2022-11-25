@@ -137,10 +137,11 @@ public class GameController
     {
        if (eventField.getFieldEvent() == FieldEvent.Chance) {
            var card = this.deck.getCard();
-           if(card instanceof GiveCardCard giveCardCard) {
-               giveCardCard.execute(getCurrentPlayer(), this.gameBoard);
-           }
-           else if(card instanceof FreeFieldCard fieldCard){
+           this.gui.displayChanceCard(card);
+          // if(card instanceof GiveCardCard giveCardCard) {
+           //    giveCardCard.execute(getCurrentPlayer(), this.gameBoard);
+           //}
+           if(card instanceof FreeFieldCard fieldCard){
                fieldCard.execute(getCurrentPlayer(),this.gameBoard);
            }
            else if(card instanceof BirthdayCard birthdayCard){
