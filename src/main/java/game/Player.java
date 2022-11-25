@@ -3,6 +3,7 @@ package game;
 public class Player {
     private int balance;
 
+    private int getOutOfJailFreeCards = 0;
     private String name;
     private int getOutOfJailCards = 0;
     public int getGetOutOfJailCards() { return this.getOutOfJailCards; }
@@ -10,6 +11,11 @@ public class Player {
 
     public String getName() { return this.name; }
     public int getBalance() { return this.balance; }
+
+    public int getGetOutOfJailFreeCards(){return this.getOutOfJailFreeCards;}
+    public void setGetOutOfJailFreeCards(int getOutOfJailFreeCards) {
+        this.getOutOfJailFreeCards = getOutOfJailFreeCards;
+    }
 
     /**
      * Adds amount to player balance

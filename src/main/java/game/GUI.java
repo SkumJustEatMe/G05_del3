@@ -78,14 +78,14 @@ public class GUI {
     public void populateFields() {
         // should be generated automatically based on gameBoard
         createStartField(0);
-        createPropertyField(1,"unowned", Color.gray);
-        createPropertyField(2,"unowned", Color.gray);
+        createPropertyField(1,"unowned", Color.magenta);
+        createPropertyField(2,"unowned", Color.magenta);
         createChanceField(3);
         createPropertyField(4, "unowned", Color.cyan);
         createPropertyField(5, "unowned", Color.cyan);
         createEmptyField(6);
-        createPropertyField(7, "unowned", Color.magenta);
-        createPropertyField(8, "unowned", Color.magenta);
+        createPropertyField(7, "unowned", Color.pink);
+        createPropertyField(8, "unowned", Color.pink);
         createChanceField(9);
         createPropertyField(10, "unowned", Color.orange);
         createPropertyField(11, "unowned", Color.orange);
@@ -96,8 +96,8 @@ public class GUI {
         createPropertyField(16, "unowned", Color.yellow);
         createPropertyField(17, "unowned", Color.yellow);
         createJailField(18);
-        createPropertyField(19, "unowned", Color.pink);
-        createPropertyField(20, "unowned", Color.pink);
+        createPropertyField(19, "unowned", Color.green);
+        createPropertyField(20, "unowned", Color.green);
         createChanceField(21);
         createPropertyField(22, "unowned", Color.blue);
         createPropertyField(23, "unowned", Color.blue);

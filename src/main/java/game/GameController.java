@@ -1,6 +1,6 @@
 package game;
 
-import chancecards.Deck;
+import chancecards.*;
 import fields.*;
 
 import java.util.ArrayList;
@@ -9,9 +9,10 @@ public class GameController
 {
     private Die die;
     private int currentDieRoll = 0;
-    private GameBoard gameBoard;
     private Deck deck;
+    private GameBoard gameBoard;
     private ArrayList<Player> players;
+
     public ArrayList<Player> getPlayers() { return this.players; }
     private Player getCurrentPlayer() { return this.players.get(indexOfCurrentPlayer); }
     private int indexOfCurrentPlayer;
@@ -134,12 +135,28 @@ public class GameController
 
     private void executeEventField(EventField eventField)
     {
-        if (eventField.getFieldEvent() == FieldEvent.Chance)
-        {
-            this.deck.getCard().execute(getCurrentPlayer());
-        }
-        else if (eventField.getFieldEvent() == FieldEvent.GoToJail)
-        {
+       if (eventField.getFieldEvent() == FieldEvent.Chance) {
+           var card = this.deck.getCard();
+           if(card instanceof FreeFieldCard fieldCard){
+               fieldCard.execute(getCurrentPlayer(),this.gameBoard);
+           }
+           else if(card instanceof BirthdayCard birthdayCard){
+           birthdayCard.execute(players, indexOfCurrentPlayer);
+           }
+           else if (card instanceof GetOutOfJailCard getOutOfJailCard){
+           getOutOfJailCard.execute(getCurrentPlayer());
+           }
+           else if (card instanceof MoveCard moveCard){
+           moveCard.execute(getCurrentPlayer());
+           }
+           else if (card instanceof MoveToCard moveToCard) {
+           moveToCard.execute(getCurrentPlayer());
+           }
+           else if(card instanceof RecieveOrPayCard recieveOrPayCard){
+           recieveOrPayCard.execute(getCurrentPlayer());
+           }
+       }
+       else if (eventField.getFieldEvent() == FieldEvent.GoToJail) {
             getCurrentPlayer().setPosition(this.gameBoard.getIndexOfGoToJail());
             if (getCurrentPlayer().getGetOutOfJailCards() > 0)
             {
@@ -149,7 +166,7 @@ public class GameController
                 getCurrentPlayer().changeBalance(-2);
             }
         }
-    }
+   }
 
     private boolean foundLoser()
     {
