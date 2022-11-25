@@ -4,6 +4,10 @@ public class Player {
     private int balance;
 
     private String name;
+    private int getOutOfJailCards = 0;
+    public int getGetOutOfJailCards() { return this.getOutOfJailCards; }
+    public void addGetOutOfJailCards(int value) { this.getOutOfJailCards += value; }
+
     public String getName() { return this.name; }
     public int getBalance() { return this.balance; }
 

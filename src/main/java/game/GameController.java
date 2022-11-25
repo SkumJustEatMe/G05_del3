@@ -1,5 +1,6 @@
 package game;
 
+import chancecards.Deck;
 import fields.*;
 
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ public class GameController
     private Die die;
     private int currentDieRoll = 0;
     private GameBoard gameBoard;
-    // private Deck deck;
+    private Deck deck;
     private ArrayList<Player> players;
     public ArrayList<Player> getPlayers() { return this.players; }
     private Player getCurrentPlayer() { return this.players.get(indexOfCurrentPlayer); }
@@ -20,7 +21,7 @@ public class GameController
     {
         this.die = new Die();
         this.gameBoard = new GameBoard();
-        //this.deck = new Deck();
+        this.deck = new Deck();
         this.players = new ArrayList<Player>();
         this.indexOfCurrentPlayer = 0;
         this.gui = new GUI(this.gameBoard, this);
@@ -110,10 +111,11 @@ public class GameController
         {
             executePropertyField(propertyField);
         }
-        // else if (field instanceof EventField eventField)
-        // {
-        //     executeEventField(eventField);
-        // }
+
+        else if (field instanceof EventField eventField)
+        {
+            executeEventField(eventField);
+        }
     }
 
     private void executePropertyField(PropertyField propertyField)
@@ -130,17 +132,24 @@ public class GameController
         }
     }
 
-//    private void executeEventField(EventField eventField)
-//    {
-//        if (eventField.getFieldEvent() == FieldEvent.Chance)
-//        {
-//            this.deck.getCard().execute(getCurrentPlayer());
-//        }
-//        else if (eventField.getFieldEvent() == FieldEvent.GoToJail)
-//        {
-//            getCurrentPlayer().setPosition(this.gameBoard.getIndexOfGoToJail());
-//        }
-//    }
+    private void executeEventField(EventField eventField)
+    {
+        if (eventField.getFieldEvent() == FieldEvent.Chance)
+        {
+            this.deck.getCard().execute(getCurrentPlayer());
+        }
+        else if (eventField.getFieldEvent() == FieldEvent.GoToJail)
+        {
+            getCurrentPlayer().setPosition(this.gameBoard.getIndexOfGoToJail());
+            if (getCurrentPlayer().getGetOutOfJailCards() > 0)
+            {
+                getCurrentPlayer().addGetOutOfJailCards(-1);
+            }
+            else {
+                getCurrentPlayer().changeBalance(-2);
+            }
+        }
+    }
 
     private boolean foundLoser()
     {
@@ -155,7 +164,6 @@ public class GameController
 
     private Player getMostWealthy()
     {
-        // in case of a draw, winner is decided by turn order
         Player mostWealthy = this.players.get(0);
         for (int i = 1; i < this.players.size(); i++)
         {
