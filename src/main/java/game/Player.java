@@ -3,9 +3,15 @@ package game;
 public class Player {
     private int balance;
 
+    private int getOutOfJailFreeCards = 0;
     private String name;
     public String getName() { return this.name; }
     public int getBalance() { return this.balance; }
+
+    public int getGetOutOfJailFreeCards(){return this.getOutOfJailFreeCards;}
+    public void setGetOutOfJailFreeCards(int getOutOfJailFreeCards) {
+        this.getOutOfJailFreeCards = getOutOfJailFreeCards;
+    }
 
     /**
      * Adds amount to player balance

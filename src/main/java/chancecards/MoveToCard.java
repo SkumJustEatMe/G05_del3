@@ -13,10 +13,11 @@ public class MoveToCard extends ChanceCard {
 
     public void execute(Player p){
         int spot;
-        p.curSqr = spot;
-        p.curSqr = p.setLoc(value);
-        if(spot > p.curSqr){
-            p.changeBalance(200);
+
+        spot = p.getPosition();
+        p.setPosition(value);
+        if(spot > p.getPosition()){
+            p.changeBalance(2);
         }
     }
 
