@@ -9,7 +9,7 @@ public class GetOutOfJailCard extends ChanceCard {
         this.text = text;
     }
     public void execute(Player p){
-        p.setGetOutOfJailFreeCards(p.getGetOutOfJailFreeCards()+1);
+        p.setGetOutOfJailFreeCards(1);
     }
     public String printText(){
         return this.text;
