@@ -149,23 +149,23 @@ enum FieldEvent{
 Chance
 GoToJail
 }
-main "1" -- "1" Gamecontroller : runs
-Gamecontroller "1"--"1" GameBoard : evaluates
-Gamecontroller "1"--"1" Die : rolls
-Gamecontroller "1"--"1" Deck : picksCard
-Deck "1"--"0..20" ChanceCard : contains
-Gamecontroller "1"--"2..4" Player : movesAndChangeBalance
-FieldEvent "1" -- "1" EventField : reads
-GUI"1" -- "1"Gamecontroller : sendsInformation
-GameBoard "1" -- "24" Field : contains
-Field "1" <|-- "1" PropertyField : isA
-Field "1" <|-- "1" EventField : isA
+main "1" - "1" Gamecontroller : runs
+Gamecontroller "1" o-- "1" GameBoard : evaluates
+Gamecontroller "1" o-- "1" Die : rolls
+Gamecontroller "1" o-- "1" Deck : picksCard
+Deck "1"*---"20" ChanceCard : contains
+Gamecontroller "1" o-- "2..4" Player : movesAndChangeBalance
+FieldEvent "1" --* "1" EventField : reads
+Gamecontroller"1" - "1"GUI : sendsInformation
+GameBoard "1" *-- "24" Field : contains
+Field "1" <|- "1" PropertyField : isA
+EventField "1" -|> "1" Field : isA
 ChanceCard "20" <|-- "2" MoveCard : isA
 ChanceCard "20" <|-- "2" MoveToCard : isA
-ChanceCard "20" <|-- "1" BirthdayCard : isA
-ChanceCard "20" <|-- "8" FreeFieldCard : isA
-ChanceCard "20" <|-- "4" GiveCardCard : isA
-ChanceCard "20" <|-- "2" RecieveOrPayCard : isA
+BirthdayCard "1" -|> "20" ChanceCard :isA
+FreeFieldCard "8" -|> "20" ChanceCard :isA
+ChanceCard "20" <|- "4" GiveCardCard : isA
+ChanceCard "20" <|- "2" RecieveOrPayCard : isA
 ChanceCard "20" <|-- "1" GetOutOfJailCard : isA
 
 @enduml
