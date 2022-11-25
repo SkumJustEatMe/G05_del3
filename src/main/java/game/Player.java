@@ -25,9 +25,6 @@ public class Player {
     public void changeBalance(int balanceChange) {
         balance += balanceChange;
 
-        if (balance < 0) {
-            balance = 0;
-        }
     }
     private int position;
     public int getPosition() { return this.position; }
