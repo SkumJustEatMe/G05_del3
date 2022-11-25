@@ -29,16 +29,15 @@ public class GameController
         this.gui = new GUI(this.gameBoard, this);
     }
 
-    private void addPlayersAndSetPosition(int numberOfPlayers)
-    {
-        for (int i = 1; i <= numberOfPlayers; i++)
-        {
-            this.players.add(new Player(i, 20));
+    private void addPlayersAndSetPosition(int numberOfPlayers){
+            for (int i = 1; i <= numberOfPlayers; i++)
+            {
+                this.players.add(new Player(i, 24-2*numberOfPlayers));
+            }
+            for (Player i : this.players) {
+                i.setPosition(0);
+            }
         }
-        for (Player i : this.players) {
-            i.setPosition(0);
-        }
-    }
 
     public void run()
     {
